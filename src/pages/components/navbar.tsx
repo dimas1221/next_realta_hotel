@@ -27,14 +27,14 @@ const NavBar : React.FC =()=> {
                   <div className="hidden lg:flex lg:items-center lg:space-x-10 mr-10">
                       <Link href="#" title="" className="text-base font-medium text-black"> Home </Link>
 
-                      <Link href="#" className="text-base font-medium text-black"> Hotels </Link>
+                      <Link href="#hotels" className="text-base font-medium text-black"> Hotels </Link>
 
                       <a href="#" title="" className="text-base font-medium text-black"> About</a>
 
                       <a href="#" title="" className="text-base font-medium text-black"> Contact </a>
                   </div>
 
-                  <Link href="#" title="" className=" mr-10 items-center justify-center hidden px-6 py-3 text-base font-semibold text-white transition-all duration-200 bg-[#131828] border border-transparent rounded-full lg:inline-flex hover:bg-[#1C2953] focus:bg-[#1C2953]" role="button"> SigIn </Link>
+                  <Link href="#" title="" className=" mr-10 items-center justify-center hidden px-6 py-2 text-base font-semibold text-white transition-all duration-200 bg-[#131828] border border-transparent rounded-full lg:inline-flex hover:bg-[#1C2953] focus:bg-[#1C2953]" role="button"> Sign In </Link>
               </nav>
           </div>
       </div>  

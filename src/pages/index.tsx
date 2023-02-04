@@ -3,9 +3,17 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import Slideshow from './components/slideshow'
+import CardHotel from './components/cardHotel'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { doCardHotelReq } from '@/redux/action/actionHotel'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(doCardHotelReq())
+  }, [])
   return (
     <>
       <Head>
@@ -14,311 +22,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Slideshow/>
-      <h1 className='text-center bold mb-10'>HOTELS</h1>
-      <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center justify-center gap-6 m-10 '>
-          <div className='card w-full md:w-1/4 p-3'>
-            {/* ini gambar */}
-            <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src="./img/hotel1.png" alt="hotels" 
-            /></div>
-            
-              <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
-                {/* badge */}
-                <div className='flex  justify-between items-center'>
-                    {/* hotle title */}
-                    <h2 className='hotel-title' title='Best Hotel Ever'>
-                      Grand hotel
-                    </h2>  
-                    <span className=' font-reguler'>indonesia</span>
-                </div>
-                <span className='flex items-center font-bold'>
-                      <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
-                    </span>
-
-                {/* hotel contact */}
-                <div>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className='text-sm  opacity-50 text-justify'> 
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fugiat, unde consequuntur, accusantium...
-                    </span>
-                  </div>
-                </div>
-
-                {/* action button */}
-                <div className='mt-2 flex gap-2 items-center justify-between'>
-                <span className='text-sm font-medium '>
-                   Contact : +62 843 6789 9064
-                  </span>
-                  <button className='button-primary'>
-                      Detail
-                  </button>
-                </div>
-              </div>
-          </div>
-          {/*  */}
-          <div className='card w-full md:w-1/4 p-3'>
-            {/* ini gambar */}
-            <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src="./img/hotel1.png" alt="hotels" 
-            /></div>
-            
-              <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
-                {/* badge */}
-                <div className='flex  justify-between items-center'>
-                    {/* hotle title */}
-                    <h2 className='hotel-title' title='Best Hotel Ever'>
-                      Grand hotel
-                    </h2>  
-                    <span className=' font-reguler'>indonesia</span>
-                </div>
-                <span className='flex items-center font-bold'>
-                      <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
-                    </span>
-
-                {/* hotel contact */}
-                <div>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className='text-sm  opacity-50 text-justify'> 
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fugiat, unde consequuntur, accusantium...
-                    </span>
-                  </div>
-                </div>
-
-                {/* action button */}
-                <div className='mt-2 flex gap-2 items-center justify-between'>
-                <span className='text-sm font-medium '>
-                   Contact : +62 843 6789 9064
-                  </span>
-                  <button className='button-primary'>
-                      Detail
-                  </button>
-                </div>
-              </div>
-          </div>
-          {/*  */}
-          <div className='card w-full md:w-1/4 p-3'>
-            {/* ini gambar */}
-            <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src="./img/hotel1.png" alt="hotels" 
-            /></div>
-            
-              <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
-                {/* badge */}
-                <div className='flex  justify-between items-center'>
-                    {/* hotle title */}
-                    <h2 className='hotel-title' title='Best Hotel Ever'>
-                      Grand hotel
-                    </h2>  
-                    <span className=' font-reguler'>indonesia</span>
-                </div>
-                <span className='flex items-center font-bold'>
-                      <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
-                    </span>
-
-                {/* hotel contact */}
-                <div>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className='text-sm  opacity-50 text-justify'> 
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fugiat, unde consequuntur, accusantium...
-                    </span>
-                  </div>
-                </div>
-
-                {/* action button */}
-                <div className='mt-2 flex gap-2 items-center justify-between'>
-                <span className='text-sm font-medium '>
-                   Contact : +62 843 6789 9064
-                  </span>
-                  <button className='button-primary'>
-                      Detail
-                  </button>
-                </div>
-              </div>
-          </div>
-          {/*  */}
-          <div className='card w-full md:w-1/4 p-3'>
-            {/* ini gambar */}
-            <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src="./img/hotel1.png" alt="hotels" 
-            /></div>
-            
-              <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
-                {/* badge */}
-                <div className='flex  justify-between items-center'>
-                    {/* hotle title */}
-                    <h2 className='hotel-title' title='Best Hotel Ever'>
-                      Grand hotel
-                    </h2>  
-                    <span className=' font-reguler'>indonesia</span>
-                </div>
-                <span className='flex items-center font-bold'>
-                      <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
-                    </span>
-
-                {/* hotel contact */}
-                <div>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className='text-sm  opacity-50 text-justify'> 
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fugiat, unde consequuntur, accusantium...
-                    </span>
-                  </div>
-                </div>
-
-                {/* action button */}
-                <div className='mt-2 flex gap-2 items-center justify-between'>
-                <span className='text-sm font-medium '>
-                   Contact : +62 843 6789 9064
-                  </span>
-                  <button className='button-primary'>
-                      Detail
-                  </button>
-                </div>
-              </div>
-          </div>
-          {/*  */}
-          <div className='card w-full md:w-1/4 p-3'>
-            {/* ini gambar */}
-            <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src="./img/hotel1.png" alt="hotels" 
-            /></div>
-            
-              <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
-                {/* badge */}
-                <div className='flex  justify-between items-center'>
-                    {/* hotle title */}
-                    <h2 className='hotel-title' title='Best Hotel Ever'>
-                      Grand hotel
-                    </h2>  
-                    <span className=' font-reguler'>indonesia</span>
-                </div>
-                <span className='flex items-center font-bold'>
-                      <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
-                    </span>
-
-                {/* hotel contact */}
-                <div>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className='text-sm  opacity-50 text-justify'> 
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fugiat, unde consequuntur, accusantium...
-                    </span>
-                  </div>
-                </div>
-
-                {/* action button */}
-                <div className='mt-2 flex gap-2 items-center justify-between'>
-                <span className='text-sm font-medium '>
-                   Contact : +62 843 6789 9064
-                  </span>
-                  <button className='button-primary'>
-                      Detail
-                  </button>
-                </div>
-              </div>
-          </div>
-          {/*  */}
-          <div className='card w-full md:w-1/4 p-3'>
-            {/* ini gambar */}
-            <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src="./img/hotel1.png" alt="hotels" 
-            /></div>
-            
-              <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
-                {/* badge */}
-                <div className='flex  justify-between items-center'>
-                    {/* hotle title */}
-                    <h2 className='hotel-title' title='Best Hotel Ever'>
-                      Grand hotel
-                    </h2>  
-                    <span className=' font-reguler'>indonesia</span>
-                </div>
-                <span className='flex items-center font-bold'>
-                      <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
-                    </span>
-
-                {/* hotel contact */}
-                <div>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className='text-sm  opacity-50 text-justify'> 
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fugiat, unde consequuntur, accusantium...
-                    </span>
-                  </div>
-                </div>
-
-                {/* action button */}
-                <div className='mt-2 flex gap-2 items-center justify-between'>
-                <span className='text-sm font-medium '>
-                   Contact : +62 843 6789 9064
-                  </span>
-                  <button className='button-primary'>
-                      Detail
-                  </button>
-                </div>
-              </div>
-          </div>
-          {/*  */}
-          <div className='card w-full md:w-1/4 p-3'>
-            {/* ini gambar */}
-            <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src="./img/hotel1.png" alt="hotels" 
-            /></div>
-            
-              <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
-                {/* badge */}
-                <div className='flex  justify-between items-center'>
-                    {/* hotle title */}
-                    <h2 className='hotel-title' title='Best Hotel Ever'>
-                      Grand hotel
-                    </h2>  
-                    <span className=' font-reguler'>indonesia</span>
-                </div>
-                <span className='flex items-center font-bold'>
-                      <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
-                    </span>
-
-                {/* hotel contact */}
-                <div>
-                  <div className='flex items-center gap-2 mt-1'>
-                    <span className='text-sm  opacity-50 text-justify'> 
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci fugiat, unde consequuntur, accusantium...
-                    </span>
-                  </div>
-                </div>
-
-                {/* action button */}
-                <div className='mt-2 flex gap-2 items-center justify-between'>
-                <span className='text-sm font-medium '>
-                   Contact : +62 843 6789 9064
-                  </span>
-                  <button className='button-primary'>
-                      Detail
-                  </button>
-                </div>
-              </div>
-          </div>
-          {/*  */}
-      </div>
+      <main>
+        <Slideshow/>
+        <section id='hotels' className='mt-10'>
+        <h1 className='text-center bold mb-10'>HOTELS</h1>
+        <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center justify-center gap-6 m-10 '>
+          <CardHotel/>
+        </div>
+        </section>
+      </main>
     </>
   )
 }

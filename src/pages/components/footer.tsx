@@ -58,23 +58,23 @@ export default function Footer() {
 
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4'>
             <div>
-              <p className='underline-offset-8 font-medium text-white'>Services</p>
+              <p className='underline-offset-8 font-medium text-white '>Services</p>
 
               <nav aria-label='Footer Navigation - Services' className='mt-6'>
                 <ul className='space-y-4 text-sm'>
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Home
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Facility
                     </a>
                   </li>
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Booking
                     </a>
                   </li>
@@ -88,19 +88,19 @@ export default function Footer() {
               <nav aria-label='Footer Navigation - Company' className='mt-6'>
                 <ul className='space-y-4 text-sm'>
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       About
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Carier
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Location Hotels
                     </a>
                   </li>
@@ -114,19 +114,19 @@ export default function Footer() {
               <nav aria-label='Footer Navigation - Company' className='mt-6'>
                 <ul className='space-y-4 text-sm'>
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Contact
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       FAQs
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Live Chat
                     </a>
                   </li>
@@ -140,25 +140,25 @@ export default function Footer() {
               <nav aria-label='Footer Navigation - Legal' className='mt-6'>
                 <ul className='space-y-4 text-sm'>
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Accessibility
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Returns Policy
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Refund Policy
                     </a>
                   </li>
 
                   <li>
-                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200'>
+                    <a href='#' className='text-white transition hover:opacity-75 dark:text-gray-200 opacity-80'>
                       Hiring Statistics
                     </a>
                   </li>
