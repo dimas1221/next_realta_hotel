@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { doCardHotelReq } from '@/redux/action/actionHotel'
-
+import {useRouter} from 'next/router'
 interface Props {
     text: string;
   }
@@ -15,12 +15,22 @@ interface Props {
     }
   };
 
-
 export default function CardHotel() {
+
+  const root = useRouter()
+  
 
     let card = useSelector(state => state.HotelReducer.hotel)
     console.log(card)
     const dispatch = useDispatch()
+
+
+    const submit = (id:any)=>{
+      root.push({
+        pathname:'/hotel',
+        query:{id}
+      },'/hotel')
+    }
 
   return (
     card && card.map((card:any, i:any)=>{
@@ -60,7 +70,7 @@ export default function CardHotel() {
                 <span className='text-sm font-medium '>
                    {card.phonenumber}
                   </span>
-                  <button className='button-primary'>
+                  <button className='button-primary' onClick={()=>submit(card.hotel_id)}>
                       Detail
                   </button>
                 </div>

@@ -27,6 +27,13 @@ body {
     shadow-lg rounded-md overflow-hidden
   }
 
+  .card2 {
+    @apply
+    bg-white text-gray-700
+    w-full 
+    shadow-lg rounded-md overflow-hidden
+  }
+
  .badge {
     @apply
      rounded-full text-xs

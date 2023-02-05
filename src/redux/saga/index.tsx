@@ -4,7 +4,8 @@ import { handlerCardHotel } from "./hotelSaga";
 
 function* watchAll(){
     yield all([
-        takeEvery(ActionTypes.GET_CARDHOTEL, handlerCardHotel)
+        takeEvery(ActionTypes.GET_CARDHOTEL, handlerCardHotel),
+        // takeEvery(ActionTypes.GET_IDCARDHOTEL, handlerGetIdCardHotel)
     ])
 }
 

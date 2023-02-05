@@ -27,7 +27,7 @@ const NavBar : React.FC =()=> {
                   <div className="hidden lg:flex lg:items-center lg:space-x-10 mr-10">
                       <Link href="#" title="" className="text-base font-medium text-black"> Home </Link>
 
-                      <Link href="#hotels" className="text-base font-medium text-black"> Hotels </Link>
+                      <Link href="/" className="text-base font-medium text-black"> Hotels </Link>
 
                       <a href="#" title="" className="text-base font-medium text-black"> About</a>
 
