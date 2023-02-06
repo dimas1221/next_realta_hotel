@@ -7,6 +7,7 @@ import CardHotel from './components/cardHotel'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { doCardHotelReq } from '@/redux/action/actionHotel'
+import SearchHotel from './components/search'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       </Head>
       <main>
         <Slideshow/>
+        <SearchHotel/>
         <section id='hotels' className='mt-10'>
         <h1 className='text-center bold mb-10'>HOTELS</h1>
         <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center justify-center gap-6 m-10 '>

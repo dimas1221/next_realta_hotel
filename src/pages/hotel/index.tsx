@@ -29,6 +29,13 @@ useEffect(()=>{
     setCardByOne({...result})
 },[id])
 
+const submit = (id:any)=>{
+    root.push({
+        pathname:'/booking',
+        query:{id}
+      },)
+}
+
   return (
         <div className="md:container md:mx-auto">
         <Row gutter={[16, 16]}>
@@ -61,7 +68,7 @@ useEffect(()=>{
                         <span className='text-sm font-medium '>
                         {cardByOne.hotel_phonenumber}
                         </span>
-                    <button className='button-primary'>
+                    <button className='button-primary' onClick={()=>submit(cardByOne.hotel_id)}>
                         Booking
                     </button>
                     </div>
