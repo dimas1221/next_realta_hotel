@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { doCardHotelReq } from '@/redux/action/actionHotel'
 import {useRouter} from 'next/router'
@@ -17,19 +17,16 @@ interface Props {
 
 export default function CardHotel() {
 
+  const dispatch = useDispatch()
   const root = useRouter()
   
-
-    let card = useSelector(state => state.HotelReducer.hotel)
-    console.log(card)
-    const dispatch = useDispatch()
-
+   let card = useSelector((state:any) => state.HotelReducer.hotel)
 
     const submit = (id:any)=>{
       root.push({
         pathname:'/hotel',
         query:{id}
-      },'/hotel')
+      },)
     }
 
   return (
@@ -81,4 +78,8 @@ export default function CardHotel() {
   )
 }
 
+
+function doCardReq(id: any): any {
+  throw new Error('Function not implemented.');
+}
 

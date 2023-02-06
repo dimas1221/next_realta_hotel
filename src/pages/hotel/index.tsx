@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Col, Row, Space } from 'antd';
-import {StarOutlined} from '@ant-design/icons';
+import {FileTextOutlined, StarOutlined} from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { doCardHotelReq } from '@/redux/action/actionHotel';
 
 
 export default function index() {
-const { Meta } = Card;
-const root = useRouter()
-const dispatch = useDispatch();
+let root = useRouter()
 const {id} =root.query
+const dispatch = useDispatch();
+let card = useSelector((state : any) => state.HotelReducer.hotel)
 
-const [dataCard, setDataCard]= useState({
-    hotel_name :'',
-    hotel_description:'',
-    hotel_rating_star:0,
-    hotel_phonenumber:'',
-    faci_hotelall:'',
-    url:'',
-    place:''
-
+const [cardByOne, setCardByOne]= useState({
+    hotel_id: 0,
+    hotel_name: '',
+    hotel_description: '',
+    hotel_rating_star: 0,
+    hotel_phonenumber: 0,
+    faci_hotelall: '',
+    url: '',
+    place: '',         
 })
 
-// useEffect(()=>{
-//     dispatch(doIdCardReq(id))
-// },[id])
+useEffect(()=>{
+    dispatch(doCardHotelReq());
+    let result = card.filter((e: { hotel_id: string | string[] | undefined; }) => e.hotel_id ==  id)[0];
+    setCardByOne({...result})
+},[id])
+
   return (
-    <div className="md:container md:mx-auto">
+        <div className="md:container md:mx-auto">
         <Row gutter={[16, 16]}>
             <Col xs={24} md={12}>
                 <div className='card2'>
@@ -34,7 +38,7 @@ const [dataCard, setDataCard]= useState({
                 <div className='m-5 mb-6'>
                     <img 
                 className='w-full '
-                src="./img/hotel1.png" alt="hotels" 
+                src={cardByOne.url} alt="hotels" 
                 /></div>
                 
                     <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
@@ -43,18 +47,19 @@ const [dataCard, setDataCard]= useState({
                     <div className='flex  justify-between items-center'>
                         {/* hotle title */}
                         <h2 className='hotel-title' title='Best Hotel Ever'>
-                            Grand hotel
+                            {cardByOne.hotel_name}
                         </h2>  
-                        <span className=' font-reguler'>indonesia</span>
+                        <span className=' font-reguler'>{cardByOne.place}</span>
                     </div>
                     <span className='flex items-center font-bold'>
-                            <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 5
+                            <img className='w-3 h-3 mr-1' src="./img/strar.png" alt="star" /> 
+                            {cardByOne.hotel_rating_star}
                         </span>
 
                     {/* action button */}
                     <div className='mt-2 flex gap-2 items-center justify-between'>
                         <span className='text-sm font-medium '>
-                        Contact : +62 843 6789 9064
+                        {cardByOne.hotel_phonenumber}
                         </span>
                     <button className='button-primary'>
                         Booking
@@ -64,11 +69,22 @@ const [dataCard, setDataCard]= useState({
                 </div>
             </Col>
             <Col xs={24} md={12}>
-                <div>
-                <h1 className='bg-[#131828] text-white p-4 rounded-lg text-xl'>Description</h1>
-                <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas accusamus nisi in eum modi quis ipsam. Explicabo sapiente qui voluptatibus perspiciatis corporis architecto sint unde, reprehenderit amet similique debitis hic!</span>
-                <h1 className='bg-[#131828] text-white p-4 rounded-lg text-xl'>Facility</h1>
-                <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni quos inventore quod ipsam fuga consectetur vitae animi voluptas minus quibusdam eveniet odit tempore minima, suscipit atque reprehenderit doloremque optio. Ipsa?</h1>
+                <div className='card2'>
+                <h1 className='bg-[#131828] text-white p-4 rounded-lg text-xl ml-3 mr-3 mr-3 mt-2'>Description</h1>
+                <span className='ml-4 mt-3 mb-3 text-base text-[#131828] flex gap-2'>{cardByOne.hotel_description}</span>
+                <h1 className='bg-[#131828] text-white p-4 rounded-lg text-xl ml-3 mr-3'>Facility</h1>
+                <span className='ml-4 mt-3 mb-3 text-base text-[#131828] flex gap-2 '>{cardByOne.faci_hotelall}</span>
+                <div className='mt-2 flex gap-2 items-center justify-end ml-3 mr-3 mb-3'>
+                <button className='button-primary'>
+                        Resto1
+                    </button>
+                    <button className='button-primary'>
+                        Resto2
+                    </button>
+                    <button className='button-primary'>
+                        Resto3
+                    </button>
+                    </div>
                 </div>
             </Col>
         </Row>
@@ -87,5 +103,27 @@ const [dataCard, setDataCard]= useState({
             </Col>
         </Row>
         </div>
-  )
+        )
 }
+
+// {
+//     ...cardByOne,
+//     hotel_id: result.hotel_id,
+//     hotel_name: result.hotel_name,
+//     hotel_description: result.hotel_description,
+//     hotel_rating_star: result.hotel_rating_star,
+//     hotel_phonenumber: result.hotel_phonenumber,
+//     faci_hotelall: result.faci_hotelall,
+//     url: result.url,
+//     place: result.place,
+// }
+
+// hotel_id: 0,
+//         hotel_name:'',
+//         hotel_description:'',
+//         hotel_rating_star:0,
+//         hotel_phonenumber:0,
+//         faci_hotelall:'',
+//         url: '',
+//         place:''
+

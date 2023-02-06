@@ -5,24 +5,14 @@ import { doCardHotelReq, doCardHotelReqSuccess, doCardHotelReqFailed} from "../a
 function* handlerCardHotel():any {
     try {
         const result = yield call(ApiHotel.getCardHotel)
-        
+        console.log('all hotel', result)
         yield put(doCardHotelReqSuccess(result.data))
     } catch (err) {
         yield put(doCardHotelReqFailed(err))
     }
 }
 
-// function* handlerGetIdCardHotel(action:any):any{
-//     const {payload} = action
-//     try{
-//         const result = yield call(ApiHotel.getCardId, payload)
-//         yield put(doCardHotelReqSuccess(result))
-//     }catch(err){
-//         yield put(doIdCardReqFailed(err))
-//     }
-// }
 
 export {
-    handlerCardHotel,
-    // handlerGetIdCardHotel
+    handlerCardHotel
 }

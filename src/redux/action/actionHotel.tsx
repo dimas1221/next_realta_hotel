@@ -19,25 +19,3 @@ export const doCardHotelReqFailed=(payload: any)=>{
         payload
     }
 }
-
-// get id card
-// export const doIdCardReq = (payload:any)=>{
-//     return{
-//         type:ActionTypes.GET_IDCARDHOTEL,
-//         payload
-//     }
-// }
-
-// export const doIdCardReqSuccess=(payload: any)=>{
-//     return {
-//         type:ActionTypes.GET_IDCARDHOTEL_SUCCED,
-//         payload
-//     }
-// }
-
-// export const doIdCardReqFailed=(payload: any)=>{
-//     return {
-//         type:ActionTypes.GET_IDCARDHOTEL_FAILED,
-//         payload
-//     }
-// }
