@@ -8,11 +8,12 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { doCardHotelReq } from '@/redux/action/actionHotel'
 import SearchHotel from './components/search'
+import { doAllFaciHotelReq } from '@/redux/action/actionFindFaciAllhotel'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const dispatch = useDispatch()
-  useEffect(() => {
+  useEffect(() => { 
     dispatch(doCardHotelReq())
   }, [])
   return (

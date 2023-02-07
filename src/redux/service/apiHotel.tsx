@@ -9,18 +9,19 @@ const getCardHotel = async()=>{
     }
 }
 
-const getCardId = async (id:any)=>{
+const getFaciAllHotel = async()=>{
     try{
-        const result = await axios.get(`/hotel/card/${id}`)
+        const result = await axios.get('/facility/faciall')
         return result
     }catch(err){
         return err
     }
 }
 
+
 const ApiHotel ={
     getCardHotel,
-    getCardId
+    getFaciAllHotel
 }
 
 export default ApiHotel

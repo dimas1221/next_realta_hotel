@@ -6,22 +6,18 @@ interface Props {
     text: string;
   }
   
-  const truncateWords = (text: string, maxWords: number): string => {
-    const words = text.split(" ");
-    if (words.length > maxWords) {
-      return words.slice(0, maxWords).join(" ") + "...";
-    } else {
-      return text;
-    }
-  };
-
 export default function CardHotel() {
 
   const dispatch = useDispatch()
   const root = useRouter()
   
-   let card = useSelector((state:any) => state.HotelReducer.hotel)
+  let card = useSelector((state:any) => state.HotelReducer.hotel)
+  // let faci = useSelector((state:any) => state.FaciAllHotelReducer.facihotel)
 
+
+
+
+  //  console.log(faci)
     const submit = (id:any)=>{
       root.push({
         pathname:'/hotel',
@@ -57,7 +53,7 @@ export default function CardHotel() {
                 <div>
                   <div className='flex items-center gap-2 mt-1'>
                     <span className='text-sm font-medium opacity-50 text-justify'> 
-                    {truncateWords(card.hotel_description, 20)}
+                    {card.hotel_description}
                     </span>
                   </div>
                 </div>
@@ -78,8 +74,4 @@ export default function CardHotel() {
   )
 }
 
-
-function doCardReq(id: any): any {
-  throw new Error('Function not implemented.');
-}
 

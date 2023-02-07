@@ -1,5 +1,6 @@
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit'
 import HotelReducer from '../reducer/hotelReducer'
+import FaciAllHotelReducer from '../reducer/faciAllHotelReducer'
 import { combineReducers } from 'redux'
 import rootSaga from '../saga'
 import createSagaMiddleware from '@redux-saga/core'
@@ -7,8 +8,10 @@ import createSagaMiddleware from '@redux-saga/core'
 const saga = createSagaMiddleware()
 
 const reducer = combineReducers({
-    HotelReducer
+    HotelReducer,
+    FaciAllHotelReducer 
 })
+
 
 const store = configureStore({
     reducer,

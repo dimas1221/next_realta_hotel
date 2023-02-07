@@ -57,6 +57,15 @@ body {
     tracking-wider transition
   }
 
+  .button-primary1{
+    @apply
+    bg-[#131828] hover:bg-[#1C2953]
+    px-3 py-2 rounded-md
+    text-white text-xs
+    tracking-wider transition
+    
+  }
+
   .button-icon {
     @apply
     flex-grow
