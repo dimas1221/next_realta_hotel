@@ -5,9 +5,10 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { doCardHotelReq } from '@/redux/action/actionHotel';
 import { doAllFaciHotelReq } from '@/redux/action/actionFindFaciAllhotel';
+import { Zoom, Slide } from "react-slideshow-image";
 
 
-
+// modul booking
 const onFinish = (values: any) => {
     console.log('Success:', values);
   };
@@ -15,8 +16,8 @@ const onFinish = (values: any) => {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
+// modul booking
   
-
 export default function index() {
 
 const { Meta } = Card;
@@ -40,11 +41,50 @@ const handleCancel = () => {
 };
 //end
 
-const dispatch = useDispatch();
-let card = useSelector((state : any) => state.HotelReducer.hotel)
+// slide card
+const zoomInProperties = {
+    indicators: true,
+    duration: 5000,
+    transitionDuration: 1000,
+    infinite: true,
 
+    prevArrow: (
+        <div style={{ width: "0.5px", marginRight: "-30px", cursor: "pointer" }}>
+            {/* <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                fill="#2e2e2e"
+            >
+                <path d="M242 180.6v-138L0 256l242 213.4V331.2h270V180.6z" />
+            </svg> */}
+        </div>
+    ),
+    nextArrow: (
+        <div style={{ width: "0.5px", marginLeft: "-30px", cursor: "pointer" }}>
+            {/* <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                fill="#2e2e2e"
+            >
+                <path d="M512 256L270 42.6v138.2H0v150.6h270v138z" />
+            </svg> */}
+        </div>
+    ),
+};
+// end
+const dispatch = useDispatch();
+
+// reducer hotel
+let card = useSelector((state : any) => state.HotelReducer.hotel)
 let faci = useSelector((state:any) => state.FaciAllHotelReducer.facihotel)
 const detail = faci.filter((item:any) => item.hotel_id == id)
+// end
+
+// modul hotel
+useEffect(()=>{
+    dispatch(doAllFaciHotelReq())
+},[id])
+
 
 const [cardByOne, setCardByOne]= useState({
     hotel_id: 0,
@@ -59,11 +99,13 @@ const [cardByOne, setCardByOne]= useState({
 
 useEffect(()=>{
     dispatch(doCardHotelReq());
-    dispatch(doAllFaciHotelReq())
     let result = card.filter((e: { hotel_id: string | string[] | undefined; }) => e.hotel_id ==  id)[0];
     setCardByOne({...result})
 },[id])
+// end
 
+let arr = cardByOne.url;
+let array = arr.split(",")
   return (
         <div className="md:container md:mx-auto">
         <Row gutter={[16, 16]}>
@@ -71,13 +113,18 @@ useEffect(()=>{
                 <div className='card2'>
                 {/* ini gambar */}
                 <div className='m-5 mb-6'>
+                <Slide {...zoomInProperties}>
+                    {array.map((each: any, index: React.Key | null | undefined) => (
+                    <div key={index} className="flex justify-center w-full h-full">
                     <img 
-                className='w-full '
-                src={cardByOne.url} alt="hotels" 
-                /></div>
-                
+                        className='w-full '
+                        src={each} alt="hotels" 
+                    />
+                       </div>
+                    ))}
+                </Slide>
+                </div>
                     <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
-
                     {/* badge */}
                     <div className='flex  justify-between items-center'>
                         {/* hotle title */}
@@ -98,6 +145,7 @@ useEffect(()=>{
                         </span>
                     </div>
                 </div>
+                {/* modul booking */}
                 </div>
                 <>
                 
@@ -191,6 +239,7 @@ useEffect(()=>{
                     </Form>
                 </Modal>
                 </>
+                {/* end */}
             </Col>
             <Col xs={24} md={12}>
                 <div className='card2'>
@@ -199,16 +248,22 @@ useEffect(()=>{
                 <h1 className='bg-[#131828] text-white p-4 rounded-lg text-base ml-3 mr-3'>Facility</h1>
                 <span className='ml-4 mt-3 mb-3 text-base text-[#131828] flex gap-2 '>{cardByOne.faci_hotelall}</span>
                 </div>
-                <span>foto :</span>
-                <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center justify-center gap-6 m-10 '>
+                <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center gap-3 justify-center m-5'>
                 {detail && detail.map((faci:any, i:any)=>{
+                    let arr = faci.fapho_url
+                    let array = arr.split(",")
+                    console.log('ab', array)
                 return(
-                    <Card
-                            hoverable
-                            style={{ width: 150 }}
-                            cover={<img alt="example" src={faci.fapho_url} />}>
-                            <Meta title={faci.faci_name}/>
-                            <div className='flex justify-between'>
+                    <Card hoverable style={{ width: 200 }} className='  w-4/12'>
+                        <Meta title={faci.faci_name}/>
+                                <Slide {...zoomInProperties}>
+                                    {array.map((each: any, index: React.Key | null | undefined) => (
+                                    <div key={index} className="flex justify-center w-full h-full">
+                                    <img alt="ex" src={each} />
+                                    </div>
+                                    ))}
+                                </Slide>
+                                <div className='flex justify-between'>
                                 <span>{faci.faci_discount}</span>
                                 <button className='button-primary1'>
                                 Action

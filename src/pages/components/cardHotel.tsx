@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { doCardHotelReq } from '@/redux/action/actionHotel'
 import {useRouter} from 'next/router'
+import { Zoom, Slide } from "react-slideshow-image";
 interface Props {
     text: string;
   }
@@ -13,8 +14,14 @@ export default function CardHotel() {
   
   let card = useSelector((state:any) => state.HotelReducer.hotel)
   // let faci = useSelector((state:any) => state.FaciAllHotelReducer.facihotel)
-
-
+ 
+  const zoomInProperties = {
+		indicators: true,
+		scale: 1.2,
+		duration: 5000,
+		transitionDuration: 1000,
+		infinite: true,
+	};
 
 
   //  console.log(faci)
@@ -27,15 +34,23 @@ export default function CardHotel() {
 
   return (
     card && card.map((card:any, i:any)=>{
+      let arr = card.url;
+      let array = arr.split(",")
         return(
           <div className='card w-full md:w-1/4 p-3'>
             {/* ini gambar */}
             <div className='m-5 mb-6'>
-              <img 
-            className='w-full '
-            src={card.url} alt="hotels" 
-            /></div>
-            
+            <Slide {...zoomInProperties}>
+              {array.map((each: any, index: React.Key | null | undefined) => (
+                <div key={index} className="flex justify-center w-full h-full">
+                  <img 
+                className='w-full '
+                src={each} alt="hotels" 
+                />
+                </div>
+                ))}
+            </Slide>
+            </div>
               <div  className='ml-5 mr-5 mb-5 flex flex-col gap-3'>
 
                 {/* badge */}
