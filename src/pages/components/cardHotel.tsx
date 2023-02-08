@@ -3,6 +3,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import { doCardHotelReq } from '@/redux/action/actionHotel'
 import {useRouter} from 'next/router'
 import { Zoom, Slide } from "react-slideshow-image";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDoorOpen, faDumbbell, faSwimmingPool, faUtensils } from '@fortawesome/free-solid-svg-icons';
 interface Props {
     text: string;
   }
@@ -37,7 +39,7 @@ export default function CardHotel() {
       let arr = card.url;
       let array = arr.split(",")
         return(
-          <div className='card w-full md:w-1/4 p-3'>
+          <div className='card md:w-1/4 p-3'>
             {/* ini gambar */}
             <div className='m-5 mb-6'>
             <Slide {...zoomInProperties}>
@@ -76,12 +78,20 @@ export default function CardHotel() {
                 {/* contact */}
                 <div className='mt-2 flex gap-2 items-center justify-between'>
                 <span className='text-sm font-medium '>
-                   {card.phonenumber}
+                   {card.hotel_phonenumber}
                   </span>
                   <button className='button-primary' onClick={()=>submit(card.hotel_id)}>
                       Detail
                   </button>
                 </div>
+                {/* icon */}
+                {/* <div className='flex-start gap-6'>
+                <span className='bg-[#131828]'>
+                <FontAwesomeIcon icon={faSwimmingPool} className='text-white'/> | 
+                <FontAwesomeIcon icon={faUtensils} className='text-white'/>  | 
+                <FontAwesomeIcon icon={faDumbbell} className='text-white'/>
+                </span>
+                </div> */}
               </div>
           </div>
         )

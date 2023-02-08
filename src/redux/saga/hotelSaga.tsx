@@ -5,7 +5,6 @@ import { doCardHotelReq, doCardHotelReqSuccess, doCardHotelReqFailed} from "../a
 function* handlerCardHotel():any {
     try {
         const result = yield call(ApiHotel.getCardHotel)
-        console.log('all hotel', result)
         yield put(doCardHotelReqSuccess(result.data))
     } catch (err) {
         yield put(doCardHotelReqFailed(err))

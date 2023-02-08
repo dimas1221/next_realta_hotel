@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { doCardHotelReq } from '@/redux/action/actionHotel';
 import { doAllFaciHotelReq } from '@/redux/action/actionFindFaciAllhotel';
+import { doGetHore } from '@/redux/action/actionHore';
 import { Zoom, Slide } from "react-slideshow-image";
 
 
@@ -77,12 +78,17 @@ const dispatch = useDispatch();
 // reducer hotel
 let card = useSelector((state : any) => state.HotelReducer.hotel)
 let faci = useSelector((state:any) => state.FaciAllHotelReducer.facihotel)
+let horeData = useSelector((state:any)=>state.HoreReducer.hore)
+
 const detail = faci.filter((item:any) => item.hotel_id == id)
+const oneHore = horeData.filter((item:any)=> item.hore_hotel_id == id)
+
 // end
 
 // modul hotel
 useEffect(()=>{
     dispatch(doAllFaciHotelReq())
+    dispatch(doGetHore())
 },[id])
 
 
@@ -243,10 +249,16 @@ let array = arr.split(",")
             </Col>
             <Col xs={24} md={12}>
                 <div className='card2'>
-                <h1 className='bg-[#131828] text-white p-4 rounded-lg text-base ml-3 mr-3 mr-3 mt-2'>Description</h1>
-                <span className='ml-4 mt-3 mb-3 text-base text-[#131828] flex gap-2'>{cardByOne.hotel_description}</span>
-                <h1 className='bg-[#131828] text-white p-4 rounded-lg text-base ml-3 mr-3'>Facility</h1>
-                <span className='ml-4 mt-3 mb-3 text-base text-[#131828] flex gap-2 '>{cardByOne.faci_hotelall}</span>
+                <h1 className=' text-2xl text-center text-[#131828] ml-3 mr-3 mt-2'>Description</h1>
+                <hr className="w-10/12 h-1 mx-auto border-b-4 border-t-4 rounded-full bg-[#131828] mt-3 mb-3"></hr>
+                <div className='w-10/12 mx-auto'>
+                    <span className='ml-4 mt-3 mb-3 text-base text-[#131828] flex gap-2 text-justify'>{cardByOne.hotel_description}</span>
+                </div>
+                <h1 className=' text-2xl text-center text-[#131828] ml-3 mr-3'>Facility</h1>
+                <hr className="w-10/12 h-1 mx-auto border-b-4 border-t-4 rounded-full bg-[#131828] mt-3 mb-3"></hr>
+                <div className='w-10/12 mx-auto'>
+                    <span className='ml-4 mt-3 mb-3 text-base text-[#131828] flex gap-2 text-justify'>{cardByOne.faci_hotelall}</span>
+                </div>
                 </div>
                 <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center gap-3 justify-center m-5'>
                 {detail && detail.map((faci:any, i:any)=>{
@@ -259,7 +271,7 @@ let array = arr.split(",")
                                 <Slide {...zoomInProperties}>
                                     {array.map((each: any, index: React.Key | null | undefined) => (
                                     <div key={index} className="flex justify-center w-full h-full">
-                                    <img alt="ex" src={each} />
+                                    <img alt="ex" src={each}  className='w-2/3'/>
                                     </div>
                                     ))}
                                 </Slide>
@@ -274,17 +286,21 @@ let array = arr.split(",")
                 </div>
             </Col>
         </Row>
-        <Row className='mt-5'>
+        <Row className='mt-5 mb-5'>
             <Col span={24}>
                 <div>
                 <h2 className='bg-[#131828] text-white p-4 rounded-lg text-xl'>Review user :</h2>
-                    <Card className='mt-2 mb-1' title={'suldani'} extra={<img alt='profil'  src='./img/profil.png' style={{width:30}}/>} style={{ width: '100%' }}> 
-                        <div className='flex justify-between'>
-                        <Space><StarOutlined className='mb-2' /><p>5</p></Space>
-                        <p>12-08-2022</p>
-                        </div> 
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora sapiente repellat minus officiis voluptate nobis? Minima, dolores sapiente? Porro omnis officia quia laborum sed, debitis provident tempora corrupti commodi. Excepturi.</p>
-                    </Card>
+                {oneHore && oneHore.map((hore:any, i:any)=>{
+                    return(
+                        <Card className='mt-2 mb-1' title={hore.user_full_name} extra={<img alt='profil'  src='./img/profil.png' style={{width:30}}/>} style={{ width: '100%' }}> 
+                            <div className='flex justify-between'>
+                            <Space><StarOutlined className='mb-2' /><p>{hore.hore_rating}</p></Space>
+                            <p>{hore.hore_created_on}</p>
+                            </div> 
+                            <p>{hore.hore_user_review}</p>
+                        </Card>
+                    )
+                })}
                 </div>
             </Col>
         </Row>

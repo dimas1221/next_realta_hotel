@@ -28,8 +28,9 @@ export default function Home() {
         <Slideshow/>
         <SearchHotel/>
         <section id='hotels' className='mt-10'>
-        <h1 className='text-center bold mb-10'>HOTELS</h1>
-        <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center justify-center gap-6 m-10 '>
+        <h1 className='text-2xl text-center text-[#131828] ml-3 mr-3 mt-2'>HOTELS</h1>
+        <hr className="w-10/12 h-1 mx-auto border-b-4 border-t-4 rounded-full bg-[#131828] mt-5 mb-5"></hr>
+        <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center justify-center gap-4 mb-5'>
           <CardHotel/>
         </div>
         </section>

@@ -23,7 +23,7 @@ body {
   .card {
     @apply
     bg-white text-gray-700
-    w-[389] min-h-[521]
+    
     shadow-lg rounded-md overflow-hidden
   }
 

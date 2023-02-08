@@ -18,10 +18,20 @@ const getFaciAllHotel = async()=>{
     }
 }
 
+const getHore = async()=>{
+    try{
+        const result = await axios.get('/hore/alluser')
+        return result
+    }catch(err){
+        return err
+    }
+}
+
 
 const ApiHotel ={
     getCardHotel,
-    getFaciAllHotel
+    getFaciAllHotel,
+    getHore
 }
 
 export default ApiHotel
