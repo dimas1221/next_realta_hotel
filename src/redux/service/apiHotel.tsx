@@ -27,11 +27,33 @@ const getHore = async()=>{
     }
 }
 
+// GET VIEW HOTEL ADMIN
+const getHotelAdmin = async()=>{
+    try{
+        const result = await axios.get('/hotel/view')
+        return result
+    }catch(err){
+        return err
+    }
+}
+
+// INSERT HOTEL
+const insertHotel = async(data:any)=>{
+    try{
+        const result = await axios.post('/hotel/insert', data)
+        return result
+    }catch(err){
+        return(err)
+    }
+}
+
 
 const ApiHotel ={
     getCardHotel,
     getFaciAllHotel,
-    getHore
+    getHore,
+    getHotelAdmin,
+    insertHotel
 }
 
 export default ApiHotel

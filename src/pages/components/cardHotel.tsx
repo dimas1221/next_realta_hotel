@@ -23,6 +23,14 @@ export default function CardHotel() {
 		duration: 5000,
 		transitionDuration: 1000,
 		infinite: true,
+    prevArrow: (
+			<div style={{ width: "1px", marginRight: "-30px", cursor: "pointer" }} className="opacity-75">
+			</div>
+		),
+		nextArrow: (
+			<div style={{ width: "1px", marginLeft: "-30px", cursor: "pointer" }}>
+			</div>
+		),
 	};
 
 

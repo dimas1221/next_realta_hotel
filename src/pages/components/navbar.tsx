@@ -29,7 +29,7 @@ const NavBar : React.FC =()=> {
 
                       <Link href="/" className="text-base font-medium text-black"> Hotels </Link>
 
-                      <a href="#" title="" className="text-base font-medium text-black"> About</a>
+                      <Link href="/hotelAdmin" title="" className="text-base font-medium text-black"> hotelAdmin</Link>
 
                       <a href="#" title="" className="text-base font-medium text-black"> Contact </a>
                   </div>
