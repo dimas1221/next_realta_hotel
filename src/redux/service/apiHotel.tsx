@@ -47,13 +47,23 @@ const insertHotel = async(data:any)=>{
     }
 }
 
+// delete hotel
+const removeHotel = async(id:any)=>{
+    try{
+        const result = await axios.delete(`hotel/delete/${id}`)
+    }catch(err){
+        return(err)
+    }
+}
+
 
 const ApiHotel ={
     getCardHotel,
     getFaciAllHotel,
     getHore,
     getHotelAdmin,
-    insertHotel
+    insertHotel,
+    removeHotel
 }
 
 export default ApiHotel

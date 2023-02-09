@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import { doHotelAdminReq, doInsertHotel } from '@/redux/action/actionHotelAdmin'
+import { doDelHotel, doHotelAdminReq, doInsertHotel } from '@/redux/action/actionHotelAdmin'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Form, Input, Modal, Radio, Table } from 'antd'
 import { useRouter } from 'next/router'
+import { DeleteOutlined, EditOutlined, ExclamationCircleFilled } from '@ant-design/icons'
 
 type LayoutType = Parameters<typeof Form>[0]['layout'];
+
 
 export default function index() {
     const dispatch = useDispatch()
@@ -15,8 +17,42 @@ export default function index() {
         dispatch(doHotelAdminReq())
     },[])
 
-    // modal
+    // modalinsert
     const [modal2Open, setModal2Open] = useState(false);
+
+        // modal edit
+        const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+
+            const showModalEdit = () => {
+                setIsModalEditOpen(true);
+            };
+
+            const handleOk = () => {
+                setIsModalEditOpen(false);
+            };
+
+            const handleCancel = () => {
+                setIsModalEditOpen(false);
+            };
+        // modal delete
+            const { confirm } = Modal;
+            const showDeleteConfirm = (id:any) => {
+                confirm({
+                title: 'Are you sure delete this task?',
+                icon: <ExclamationCircleFilled />,
+                content: 'Some descriptions',
+                okText: 'Yes',
+                okType: 'danger',
+                cancelText: 'No',
+                onOk() {
+                    dispatch(doDelHotel(id));
+                },
+                onCancel() {
+                    console.log('OK');
+                },
+                });
+            };
+        
     // end
     // form inputan
     const [form] = Form.useForm();
@@ -39,6 +75,7 @@ export default function index() {
           title: 'hotel',
           dataIndex: 'hotelName',
           key: 'hotelName',
+          sorter: (a:any, b:any) => a.hotelName.length - b.hotelName.length,
         },
         {
           title: 'Deskripsi',
@@ -49,6 +86,7 @@ export default function index() {
           title: 'Rating',
           dataIndex: 'hotelRatingStar',
           key: 'hotelRatingStar',
+          sorter: (a:any, b:any) => a.hotelRatingStar - b.hotelRatingStar,
         },
         {
             title: 'hotelPhonenumber',
@@ -59,6 +97,23 @@ export default function index() {
             title: 'hotelModifiedDate',
             dataIndex: 'hotelModifiedDate',
             key: 'hotelModifiedDate',
+        },
+        {
+            title: 'Aksi',
+            key: 'action',
+            render: (_: any,record: { hotelId: any; }) => (
+              <span className='flex'>
+                <>
+                <Button className="h-10 px-6 font-semibold rounded-md  text-yellow-500 text-2xl hover:text-green-400 " type="primary" onClick={showModalEdit}><EditOutlined /></Button>
+                <Modal title="Basic Modal" open={isModalEditOpen} onOk={handleOk} onCancel={handleCancel}>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
+                <Button onClick={()=>showDeleteConfirm(record.hotelId)} type="dashed" className="h-10 px-6 font-semibold rounded-md  text-red-500 text-2xl hover:text-green-400" ><DeleteOutlined /></Button> 
+                </>
+              </span>
+            ),
         },
         ]
 
@@ -82,13 +137,18 @@ export default function index() {
                 setModal2Open(false)
             }
         // end
+        // button delete data
+            const delData = (id:any)=>{
+                dispatch(doDelHotel(id))
+            }
+        // end
         
   return (
     <div className='w-3/4 mx-auto text-center'>
         <div className='flex justify-start'>
         {/* modal add data */}
         <>
-        <Button className='bg-red-500 mb-5' type="primary" onClick={() => setModal2Open(true)}>
+        <Button className='bg-red-500 mb-5 w-28' type="primary" onClick={() => setModal2Open(true)}>
             Add
         </Button>
         <Modal
@@ -97,6 +157,7 @@ export default function index() {
             open={modal2Open}
             onOk={() => setModal2Open(false)}
             onCancel={() => setModal2Open(false)}
+            footer={null}
         >
            {/* form */}
                 <Form
@@ -138,7 +199,10 @@ export default function index() {
         {/* end */}
         </div>
         <div>
-        <Table dataSource={dataHotel} columns={columns} />
+        <Table 
+         scroll={{ x: true }}
+         size="middle" dataSource={dataHotel} columns={columns}
+          />
         </div>
     </div>
   )

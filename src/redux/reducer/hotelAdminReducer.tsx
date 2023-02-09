@@ -23,8 +23,21 @@ function HotelAdminReducer(state = initialState, action: any) {
       return {...state, hotelAdmin: [...state.hotelAdmin, action.payload]};
     case ActionTypes.ADD_HOTELADMIN_FAILED:
       return {...state, hotelAdmin: [...state.hotelAdmin, action.payload]};
+      // delete
+    case ActionTypes.DEL_HOTELADMIN:
+      return {...state};
+    case ActionTypes.DEL_HOTELADMIN_SUCCED:
+      return {
+        ...state,
+        hotelAdmin:state.hotelAdmin.filter(hotelAdmin => hotelAdmin.hotelId !== action.payload)
+      };
+    case ActionTypes.DEL_HOTELADMIN_FAILED:
+      return {
+        ...state,
+        hotelAdmin:state.hotelAdmin.filter(hotelAdmin => hotelAdmin.hotelId !== action.payload.id)
+      };
     default:
-      return { ...state};
+      return state;
   }
 }
 

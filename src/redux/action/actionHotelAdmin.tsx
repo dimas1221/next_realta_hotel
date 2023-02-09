@@ -41,3 +41,24 @@ export const doInsertHotelFailed =(payload:any)=>{
         payload
     }
 }
+
+// DELETE
+export const doDelHotel = (payload:any)=>{
+    return{
+        type:ActionTypes.DEL_HOTELADMIN,
+        payload
+    }
+}
+export const doDelHotelSucced = (payload:any)=>{
+    return{
+        type:ActionTypes.DEL_HOTELADMIN_SUCCED,
+        payload
+    }
+}
+export const doDelHotelFailed = (payload:any)=>{
+    return{
+        type:ActionTypes.DEL_HOTELADMIN_FAILED,
+        payload
+    }
+}
+
