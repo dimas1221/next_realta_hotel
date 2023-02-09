@@ -8,7 +8,7 @@ interface InitialState {
 const initialState: InitialState = {
   facihotel: [],
 };
- 
+
 function FaciAllHotelReducer(state = initialState, action: any) {
   switch (action.type) {
     case ActionTypes.GET_FACIALLHOTEL:
@@ -18,7 +18,7 @@ function FaciAllHotelReducer(state = initialState, action: any) {
     case ActionTypes.GET_FACIALLHOTEL_FAILED:
       return { ...state, facihotel: action.payload };
     default:
-      return { ...state};
+      return { ...state };
   }
 }
 

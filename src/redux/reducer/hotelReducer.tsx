@@ -1,4 +1,4 @@
-import  ActionTypes  from "../constant/actionType";
+import ActionTypes from "../constant/actionType";
 
 interface InitialState {
   hotel: any[];
@@ -17,7 +17,7 @@ function HotelReducer(state = initialState, action: any) {
     case ActionTypes.GET_CARDHOTEL_FAILED:
       return { ...state, hotel: action.payload };
     default:
-      return { ...state};
+      return { ...state };
   }
 }
 

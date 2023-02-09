@@ -1,21 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import Slideshow from './components/slideshow'
-import CardHotel from './components/cardHotel'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { doCardHotelReq } from '@/redux/action/actionHotel'
-import SearchHotel from './components/search'
-import { doAllFaciHotelReq } from '@/redux/action/actionFindFaciAllhotel'
-const inter = Inter({ subsets: ['latin'] })
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import Slideshow from "./components/slideshow";
+import CardHotel from "./components/cardHotel";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { doCardHotelReq } from "@/redux/action/actionHotel";
+import SearchHotel from "./components/search";
+import { doAllFaciHotelReq } from "@/redux/action/actionFindFaciAllhotel";
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const dispatch = useDispatch()
-  useEffect(() => { 
-    dispatch(doCardHotelReq())
-  }, [])
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(doCardHotelReq());
+  }, []);
   return (
     <>
       <Head>
@@ -25,16 +25,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Slideshow/>
-        <SearchHotel/>
-        <section id='hotels' className='mt-10'>
-        <h1 className='text-2xl text-center text-[#131828] ml-3 mr-3 mt-2'>HOTELS</h1>
-        <hr className="w-10/12 h-1 mx-auto border-b-4 border-t-4 rounded-full bg-[#131828] mt-5 mb-5"></hr>
-        <div className='flex flex-wrap md:flex-no-wrap -mx-3 items-center justify-center gap-4 mb-5'>
-          <CardHotel/>
-        </div>
+        <Slideshow />
+        <SearchHotel />
+        <section id="hotels" className="mt-10">
+          <h1 className="text-2xl text-center text-[#131828] ml-3 mr-3 mt-2">
+            HOTELS
+          </h1>
+          <hr className="w-10/12 h-1 mx-auto border-b-4 border-t-4 rounded-full bg-[#131828] mt-5 mb-5"></hr>
+          <div className="flex flex-wrap md:flex-no-wrap items-center justify-center gap-6 m-10 mb-5">
+            <CardHotel />
+          </div>
         </section>
       </main>
     </>
-  )
+  );
 }

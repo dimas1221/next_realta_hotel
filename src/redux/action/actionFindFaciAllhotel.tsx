@@ -1,21 +1,21 @@
 import ActionTypes from "../constant/actionType";
 
-export const doAllFaciHotelReq = ()=>{
-    return{
-        type:ActionTypes.GET_FACIALLHOTEL
-    }
-}
+export const doAllFaciHotelReq = () => {
+  return {
+    type: ActionTypes.GET_FACIALLHOTEL,
+  };
+};
 
-export const doAllFaciHotelReqSuccess=(payload: any)=>{
-    return {
-        type:ActionTypes.GET_FACIALLHOTEL_SUCCED,
-        payload: payload
-    }
-}
+export const doAllFaciHotelReqSuccess = (payload: any) => {
+  return {
+    type: ActionTypes.GET_FACIALLHOTEL_SUCCED,
+    payload: payload,
+  };
+};
 
-export const doAllFaciHotelReqFailed=(payload: any)=>{
-    return {
-        type:ActionTypes.GET_FACIALLHOTEL_FAILED,
-        payload
-    }
-}
+export const doAllFaciHotelReqFailed = (payload: any) => {
+  return {
+    type: ActionTypes.GET_FACIALLHOTEL_FAILED,
+    payload,
+  };
+};

@@ -1,4 +1,4 @@
-import  ActionTypes  from "../constant/actionType";
+import ActionTypes from "../constant/actionType";
 
 interface InitialState {
   hore: any[];
@@ -17,7 +17,7 @@ function HoreReducer(state = initialState, action: any) {
     case ActionTypes.GET_HORE_FAILED:
       return { ...state, hore: action.payload };
     default:
-      return { ...state};
+      return { ...state };
   }
 }
 

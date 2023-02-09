@@ -1,21 +1,21 @@
-import ActionTypes from "../constant/actionType"
+import ActionTypes from "../constant/actionType";
 
-export const doCardHotelReq = ()=>{
-    return{
-        type:ActionTypes.GET_CARDHOTEL
-    }
-}
+export const doCardHotelReq = () => {
+  return {
+    type: ActionTypes.GET_CARDHOTEL,
+  };
+};
 
-export const doCardHotelReqSuccess=(payload: any)=>{
-    return {
-        type:ActionTypes.GET_CARDHOTEL_SUCCED,
-        payload: payload
-    }
-}
+export const doCardHotelReqSuccess = (payload: any) => {
+  return {
+    type: ActionTypes.GET_CARDHOTEL_SUCCED,
+    payload: payload,
+  };
+};
 
-export const doCardHotelReqFailed=(payload: any)=>{
-    return {
-        type:ActionTypes.GET_CARDHOTEL_FAILED,
-        payload
-    }
-}
+export const doCardHotelReqFailed = (payload: any) => {
+  return {
+    type: ActionTypes.GET_CARDHOTEL_FAILED,
+    payload,
+  };
+};

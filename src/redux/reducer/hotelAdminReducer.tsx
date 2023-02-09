@@ -1,4 +1,4 @@
-import  ActionTypes  from "../constant/actionType";
+import ActionTypes from "../constant/actionType";
 
 interface InitialState {
   hotelAdmin: any[];
@@ -16,25 +16,29 @@ function HotelAdminReducer(state = initialState, action: any) {
       return { ...state, hotelAdmin: action.payload };
     case ActionTypes.GET_HOTELADMIN_FAILED:
       return { ...state, hotelAdmin: action.payload };
-      // insert
+    // insert
     case ActionTypes.ADD_HOTELADMIN:
-      return {...state};
+      return { ...state };
     case ActionTypes.ADD_HOTELADMIN_SUCCED:
-      return {...state, hotelAdmin: [...state.hotelAdmin, action.payload]};
+      return { ...state, hotelAdmin: [...state.hotelAdmin, action.payload] };
     case ActionTypes.ADD_HOTELADMIN_FAILED:
-      return {...state, hotelAdmin: [...state.hotelAdmin, action.payload]};
-      // delete
+      return { ...state, hotelAdmin: [...state.hotelAdmin, action.payload] };
+    // delete
     case ActionTypes.DEL_HOTELADMIN:
-      return {...state};
+      return { ...state };
     case ActionTypes.DEL_HOTELADMIN_SUCCED:
       return {
         ...state,
-        hotelAdmin:state.hotelAdmin.filter(hotelAdmin => hotelAdmin.hotelId !== action.payload)
+        hotelAdmin: state.hotelAdmin.filter(
+          (hotelAdmin) => hotelAdmin.hotelId !== action.payload
+        ),
       };
     case ActionTypes.DEL_HOTELADMIN_FAILED:
       return {
         ...state,
-        hotelAdmin:state.hotelAdmin.filter(hotelAdmin => hotelAdmin.hotelId !== action.payload.id)
+        hotelAdmin: state.hotelAdmin.filter(
+          (hotelAdmin) => hotelAdmin.hotelId !== action.payload.id
+        ),
       };
     default:
       return state;
