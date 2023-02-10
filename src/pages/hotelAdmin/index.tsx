@@ -3,9 +3,10 @@ import {
   doDelHotel,
   doHotelAdminReq,
   doInsertHotel,
+  doUpdateHotel,
 } from "@/redux/action/actionHotelAdmin";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, Input, Modal, Radio, Table } from "antd";
+import { Alert, Button, Form, Input, Modal, Radio, Space, Table } from "antd";
 import { useRouter } from "next/router";
 import {
   DeleteOutlined,
@@ -29,20 +30,6 @@ export default function index() {
   // modalinsert
   const [modal2Open, setModal2Open] = useState(false);
 
-  // modal edit
-  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
-
-  const showModalEdit = () => {
-    setIsModalEditOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalEditOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalEditOpen(false);
-  };
   // modal delete
   const { confirm } = Modal;
   const showDeleteConfirm = (id: any) => {
@@ -83,6 +70,17 @@ export default function index() {
 
   // end
 
+  // buuton edit
+  const showEdit = (id: any) => {
+    // navigate('/editcust', {state:{id}})
+    router.push(
+      {
+        pathname: "hotelAdmin/updatehotel",
+        query: { id },
+      },
+      "hotelAdmin/updatehotel"
+    );
+  };
   const columns = [
     {
       title: "hotel",
@@ -120,20 +118,10 @@ export default function index() {
             <Button
               className="h-10 px-6 font-semibold rounded-md  text-yellow-500 text-2xl hover:text-green-400 "
               type="primary"
-              onClick={showModalEdit}
+              onClick={() => showEdit(record.hotelId)}
             >
               <EditOutlined />
             </Button>
-            <Modal
-              title="Basic Modal"
-              open={isModalEditOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-            </Modal>
             <Button
               onClick={() => showDeleteConfirm(record.hotelId)}
               type="dashed"
@@ -167,16 +155,27 @@ export default function index() {
     dispatch(doInsertHotel(valueHotel));
     router.push("/hotelAdmin");
     setModal2Open(false);
+    setVisible("");
+    setTimeout(() => {
+      setVisible("hidden");
+    }, 2000);
   };
-  // end
-  // button delete data
-  const delData = (id: any) => {
-    dispatch(doDelHotel(id));
-  };
+  // alert
+  const [visible, setVisible] = useState("hidden");
   // end
 
   return (
     <div className="w-3/4 mx-auto text-center">
+      <Alert
+        message="Success"
+        description="Data has been successfully entered into the table."
+        type="success"
+        showIcon
+        style={{ marginBottom: "16px" }}
+        closable
+        afterClose={() => setVisible("")}
+        className={visible}
+      />
       <div className="flex justify-start">
         {/* modal add data */}
         <>
@@ -241,12 +240,12 @@ export default function index() {
                   type="text"
                 />
               </Form.Item>
-              <Form.Item label="hotelModifiedDate">
+              <Form.Item>
                 <Input
                   placeholder="input placeholder"
                   value={valueHotel.hotelModifiedDate}
                   onChange={eventHandler("hotelModifiedDate")}
-                  readOnly
+                  hidden
                   type="date"
                 />
               </Form.Item>

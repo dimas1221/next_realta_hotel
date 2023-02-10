@@ -61,3 +61,23 @@ export const doDelHotelFailed = (payload: any) => {
     payload,
   };
 };
+
+// update
+export const doUpdateHotel = (payload: any) => {
+  return {
+    type: ActionTypes.UPDATE_HOTELADMIN,
+    payload,
+  };
+};
+export const doUpdateHotelSucces = (payload: any) => {
+  return {
+    type: ActionTypes.UPDATE_HOTELADMIN_SUCCED,
+    payload,
+  };
+};
+export const doUpdateHotelFailed = (payload: any) => {
+  return {
+    type: ActionTypes.UPDATE_HOTELADMIN_FAILED,
+    payload,
+  };
+};

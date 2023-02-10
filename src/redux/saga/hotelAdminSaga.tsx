@@ -8,6 +8,7 @@ import {
   doDelHotel,
   doDelHotelFailed,
   doDelHotelSucced,
+  doUpdateHotelSucces,
 } from "../action/actionHotelAdmin";
 
 function* handlerHotelAdmin(): any {
@@ -39,4 +40,18 @@ function* handlerDeleteHotel(action: any) {
   }
 }
 
-export { handlerHotelAdmin, handlerInsertHotel, handlerDeleteHotel };
+function* handlerUpdateHotel(action: any) {
+  try {
+    yield call(ApiHotel.updateHotel, action.payload);
+    yield put(doUpdateHotelSucces(action.payload));
+  } catch (err) {
+    return err;
+  }
+}
+
+export {
+  handlerHotelAdmin,
+  handlerInsertHotel,
+  handlerDeleteHotel,
+  handlerUpdateHotel,
+};

@@ -51,6 +51,17 @@ const insertHotel = async (data: any) => {
 const removeHotel = async (id: any) => {
   try {
     const result = await axios.delete(`hotel/delete/${id}`);
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
+// UPDATE HOTEL
+const updateHotel = async (data: any) => {
+  try {
+    const result = await axios.put(`/hotel/${data.hotelId}`, data);
+    return result;
   } catch (err) {
     return err;
   }
@@ -63,6 +74,7 @@ const ApiHotel = {
   getHotelAdmin,
   insertHotel,
   removeHotel,
+  updateHotel,
 };
 
 export default ApiHotel;

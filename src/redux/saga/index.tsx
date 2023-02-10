@@ -6,6 +6,7 @@ import {
   handlerDeleteHotel,
   handlerHotelAdmin,
   handlerInsertHotel,
+  handlerUpdateHotel,
 } from "./hotelAdminSaga";
 import { handlerHore } from "./horeSaga";
 
@@ -17,6 +18,7 @@ function* watchAll() {
     takeEvery(ActionTypes.GET_HOTELADMIN, handlerHotelAdmin),
     takeEvery(ActionTypes.ADD_HOTELADMIN, handlerInsertHotel),
     takeEvery(ActionTypes.DEL_HOTELADMIN, handlerDeleteHotel),
+    takeEvery(ActionTypes.UPDATE_HOTELADMIN, handlerUpdateHotel),
   ]);
 }
 
