@@ -12,6 +12,7 @@ export default function udatehotel() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
+  const { TextArea } = Input;
 
   const now = new Date();
   let dataHotel = useSelector(
@@ -26,12 +27,6 @@ export default function udatehotel() {
     hotelPhonenumber: "",
     hotelModifiedDate: now.toISOString().substr(0, 10),
   });
-
-  // useEffect(() => {
-  //   dispatch(doHotelAdminReq());
-  //   let oneHotel = dataHotel.find((item: any) => item.hotelId == id);
-  //   setDataUpdate(oneHotel);
-  // }, [id]);
 
   const [oneHotel, setOneHotel] = useState();
 
@@ -102,7 +97,7 @@ export default function udatehotel() {
           />
         </Form.Item>
         <Form.Item label="hotelDescription">
-          <Input
+          <TextArea
             placeholder=""
             value={dataUpdate.hotelDescription}
             onChange={eventHandler("hotelDescription")}
@@ -125,7 +120,7 @@ export default function udatehotel() {
             onChange={eventHandler("hotelPhonenumber")}
           />
         </Form.Item>
-        <Form.Item label="hotelModifiedDate">
+        <Form.Item>
           <Input
             placeholder="input placeholder"
             type="date"

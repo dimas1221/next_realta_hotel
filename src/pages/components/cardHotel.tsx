@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { doCardHotelReq } from "@/redux/action/actionHotel";
 import { useRouter } from "next/router";
-import { Zoom, Slide } from "react-slideshow-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDoorOpen,
@@ -10,6 +9,7 @@ import {
   faSwimmingPool,
   faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
+import { Carousel } from "antd";
 interface Props {
   text: string;
 }
@@ -19,28 +19,7 @@ export default function CardHotel() {
   const root = useRouter();
 
   let card = useSelector((state: any) => state.HotelReducer.hotel);
-  // let faci = useSelector((state:any) => state.FaciAllHotelReducer.facihotel)
 
-  const zoomInProperties = {
-    indicators: true,
-    scale: 1.2,
-    duration: 5000,
-    transitionDuration: 1000,
-    infinite: true,
-    prevArrow: (
-      <div
-        style={{ width: "1px", marginRight: "-30px", cursor: "pointer" }}
-        className="opacity-75"
-      ></div>
-    ),
-    nextArrow: (
-      <div
-        style={{ width: "1px", marginLeft: "-30px", cursor: "pointer" }}
-      ></div>
-    ),
-  };
-
-  //  console.log(faci)
   const submit = (id: any) => {
     root.push({
       pathname: "/hotel",
@@ -57,13 +36,11 @@ export default function CardHotel() {
         <div className="card md:w-1/4 p-3">
           {/* ini gambar */}
           <div className="m-5 mb-6">
-            <Slide {...zoomInProperties}>
-              {array.map((each: any, index: React.Key | null | undefined) => (
-                <div key={index} className="flex justify-center w-full h-full">
-                  <img className="w-full " src={each} alt="hotels" />
-                </div>
+            <Carousel autoplay autoplaySpeed={4000}>
+              {array.map((each: any) => (
+                <img className="w-full " src={each} alt="hotels" />
               ))}
-            </Slide>
+            </Carousel>
           </div>
           <div className="ml-5 mr-5 mb-5 flex flex-col gap-3">
             {/* badge */}

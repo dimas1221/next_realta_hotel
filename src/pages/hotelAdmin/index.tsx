@@ -19,6 +19,7 @@ type LayoutType = Parameters<typeof Form>[0]["layout"];
 export default function index() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { TextArea } = Input;
   let dataHotel = useSelector(
     (state: any) => state.HotelAdminReducer.hotelAdmin
   );
@@ -217,7 +218,7 @@ export default function index() {
                 />
               </Form.Item>
               <Form.Item label="hotelDescription">
-                <Input
+                <TextArea
                   placeholder=""
                   value={valueHotel.hotelDescription}
                   onChange={eventHandler("hotelDescription")}
