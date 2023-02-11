@@ -18,6 +18,7 @@ import { doCardHotelReq } from "@/redux/action/actionHotel";
 import { doAllFaciHotelReq } from "@/redux/action/actionFindFaciAllhotel";
 import { doGetHore } from "@/redux/action/actionHore";
 import { Zoom, Slide } from "react-slideshow-image";
+import { result } from "lodash";
 
 // modul booking
 const onFinish = (values: any) => {
@@ -33,7 +34,7 @@ export default function index() {
   const { Meta } = Card;
   let root = useRouter();
   const { id } = root.query;
-
+  const dispatch = useDispatch();
   // modul booking
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -76,24 +77,23 @@ export default function index() {
     ),
   };
   // end
-  const dispatch = useDispatch();
 
   // reducer hotel
   let card = useSelector((state: any) => state.HotelReducer.hotel);
-  let faci = useSelector((state: any) => state.FaciAllHotelReducer.facihotel);
-  let horeData = useSelector((state: any) => state.HoreReducer.hore);
+  // let faci = useSelector((state: any) => state.FaciAllHotelReducer.facihotel);
+  // let horeData = useSelector((state: any) => state.HoreReducer.hore);
 
-  const detail = faci.filter((item: any) => item.hotel_id == id);
-  console.log("room", detail);
-  const oneHore = horeData.filter((item: any) => item.hore_hotel_id == id);
+  // const detail = faci.filter((item: any) => item.hotel_id == id);
+
+  // const oneHore = horeData.filter((item: any) => item.hore_hotel_id == id);
 
   // end
 
   // modul hotel
-  useEffect(() => {
-    dispatch(doAllFaciHotelReq());
-    dispatch(doGetHore());
-  }, [id]);
+  // useEffect(() => {
+  //   dispatch(doAllFaciHotelReq());
+  //   dispatch(doGetHore());
+  // }, [id]);
 
   const [cardByOne, setCardByOne] = useState({
     hotel_id: 0,
@@ -105,18 +105,23 @@ export default function index() {
     url: "",
     place: "",
   });
-
+  const [oneHotelCard, setOneHotelCard] = useState();
   useEffect(() => {
     dispatch(doCardHotelReq());
-    let result = card.filter(
-      (e: { hotel_id: string | string[] | undefined }) => e.hotel_id == id
-    )[0];
-    setCardByOne({ ...result });
+    let result = card.find((e: any) => e.hotel_id == id);
+    setOneHotelCard(result);
   }, [id]);
+
+  useEffect(() => {
+    if (oneHotelCard) {
+      setCardByOne(oneHotelCard);
+    }
+  }, [oneHotelCard, id]);
   // end
 
   let arr = cardByOne.url;
   let array = arr.split(",");
+  console.log("array", array);
   return (
     <div className="md:container md:mx-auto">
       <Row gutter={[16, 16]}>
@@ -124,17 +129,17 @@ export default function index() {
           <div className="card2">
             {/* ini gambar */}
             <div className="m-5 mb-6">
-              <Slide {...zoomInProperties}>
+              {/* <Slide {...zoomInProperties}>
                 {array.map((each: any, index: React.Key | null | undefined) => (
                   <div
                     key={index}
                     className="flex justify-center w-full h-full"
-                  >
-                    <img className="w-full " src={each} alt="hotels" />
-                  </div>
-                ))}
-              </Slide>
+                  > */}
+              <img className="w-full " src={array[1]} alt="hotels" />
             </div>
+            {/* ))}
+              </Slide>
+            </div> */}
             <div className="ml-5 mr-5 mb-5 flex flex-col gap-3">
               {/* badge */}
               <div className="flex  justify-between items-center">
@@ -369,7 +374,7 @@ export default function index() {
               </span>
             </div>
           </div>
-          <div className="flex flex-wrap md:flex-no-wrap -mx-3 items-center gap-3 justify-center m-5">
+          {/* <div className="flex flex-wrap md:flex-no-wrap -mx-3 items-center gap-3 justify-center m-5">
             {detail &&
               detail.map((faci: any, i: any) => {
                 let arr = faci.fapho_url;
@@ -397,12 +402,12 @@ export default function index() {
                   </Card>
                 );
               })}
-          </div>
+          </div> */}
         </Col>
       </Row>
       <Row className="mt-5 mb-5">
         <Col span={24}>
-          <div>
+          {/* <div>
             <h2 className="bg-[#131828] text-white p-4 rounded-lg text-xl">
               Review user :
             </h2>
@@ -432,7 +437,7 @@ export default function index() {
                   </Card>
                 );
               })}
-          </div>
+          </div> */}
         </Col>
       </Row>
     </div>

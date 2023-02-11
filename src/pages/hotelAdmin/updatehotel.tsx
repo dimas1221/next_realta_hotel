@@ -1,4 +1,7 @@
-import { doUpdateHotel } from "@/redux/action/actionHotelAdmin";
+import {
+  doHotelAdminReq,
+  doUpdateHotel,
+} from "@/redux/action/actionHotelAdmin";
 import { Button, Form, Input, Radio } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -14,22 +17,35 @@ export default function udatehotel() {
   let dataHotel = useSelector(
     (state: any) => state.HotelAdminReducer.hotelAdmin
   );
-  // let oneHotel = dataHotel.find((item: any) => item.hotelId == id);
-  let oneHotel;
-  if (id) {
-    oneHotel = dataHotel.find((item: any) => item.hotelId == id);
-  } else {
-    oneHotel = null;
-  }
 
   const [dataUpdate, setDataUpdate] = useState({
-    hotelId: oneHotel.hotelId,
-    hotelName: oneHotel.hotelName,
-    hotelDescription: oneHotel.hotelDescription,
-    hotelRatingStar: oneHotel.hotelRatingStar,
-    hotelPhonenumber: oneHotel.hotelPhonenumber,
+    hotelId: "",
+    hotelName: "",
+    hotelDescription: "",
+    hotelRatingStar: 0,
+    hotelPhonenumber: "",
     hotelModifiedDate: now.toISOString().substr(0, 10),
   });
+
+  // useEffect(() => {
+  //   dispatch(doHotelAdminReq());
+  //   let oneHotel = dataHotel.find((item: any) => item.hotelId == id);
+  //   setDataUpdate(oneHotel);
+  // }, [id]);
+
+  const [oneHotel, setOneHotel] = useState();
+
+  useEffect(() => {
+    dispatch(doHotelAdminReq());
+    let hotel = dataHotel.find((item: any) => item.hotelId == id);
+    setOneHotel(hotel);
+  }, [id]);
+
+  useEffect(() => {
+    if (oneHotel) {
+      setDataUpdate(oneHotel);
+    }
+  }, [oneHotel, id]);
 
   const eventHandler =
     (item: any): ((event: any) => void) =>

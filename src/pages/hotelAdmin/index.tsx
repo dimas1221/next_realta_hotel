@@ -77,8 +77,8 @@ export default function index() {
       {
         pathname: "hotelAdmin/updatehotel",
         query: { id },
-      },
-      "hotelAdmin/updatehotel"
+      }
+      // "hotelAdmin/updatehotel"
     );
   };
   const columns = [
