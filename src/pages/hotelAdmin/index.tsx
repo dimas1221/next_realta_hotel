@@ -12,6 +12,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
+  FundViewOutlined,
 } from "@ant-design/icons";
 
 type LayoutType = Parameters<typeof Form>[0]["layout"];
@@ -82,6 +83,13 @@ export default function index() {
       // "hotelAdmin/updatehotel"
     );
   };
+
+  const showFaci = (id: any) => {
+    router.push({
+      pathname: "hotelAdmin/facility",
+      query: { id },
+    });
+  };
   const columns = [
     {
       title: "hotel",
@@ -111,6 +119,21 @@ export default function index() {
       key: "hotelModifiedDate",
     },
     {
+      title: "facilities",
+      key: "faicilities",
+      render: (_: any, record: { hotelId: any }) => (
+        <span>
+          <Button
+            className="h-10 px-6 font-semibold rounded-md  text-blue-500 text-2xl hover:text-green-400 "
+            type="primary"
+            onClick={() => showFaci(record.hotelId)}
+          >
+            <FundViewOutlined />
+          </Button>
+        </span>
+      ),
+    },
+    {
       title: "Aksi",
       key: "action",
       render: (_: any, record: { hotelId: any }) => (
@@ -137,6 +160,7 @@ export default function index() {
   ];
 
   // value input
+
   const [valueHotel, setValueHotel] = useState({
     hotelName: "",
     hotelDescription: "",

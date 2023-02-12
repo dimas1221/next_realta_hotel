@@ -83,7 +83,6 @@ export default function index() {
     let result = card.find((e: any) => e.hotel_id == id);
     setOneHotelCard(result);
   }, [id]);
-
   useEffect(() => {
     if (oneHotelCard) {
       setCardByOne(oneHotelCard);

@@ -1,3 +1,4 @@
+import { Result } from "antd";
 import axios from "../../config/http-common";
 
 const getCardHotel = async () => {
@@ -67,6 +68,26 @@ const updateHotel = async (data: any) => {
   }
 };
 
+// get faci
+const getFaciAdmin = async () => {
+  try {
+    const result = await axios.get("/facility/view");
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
+// get max idroom
+const getMaxIdRoom = async () => {
+  try {
+    const result = await axios.get("/facility/maxroomid");
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 const ApiHotel = {
   getCardHotel,
   getFaciAllHotel,
@@ -75,6 +96,8 @@ const ApiHotel = {
   insertHotel,
   removeHotel,
   updateHotel,
+  getFaciAdmin,
+  getMaxIdRoom,
 };
 
 export default ApiHotel;
