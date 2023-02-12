@@ -11,8 +11,8 @@ export default function addFaci() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
+  console.log(id);
 
-  console.log("id", id);
   // validasi from input room number
   const IdRoom = useSelector(
     (state: any) => state.RoomNumberReducer.RoomNumber
@@ -183,7 +183,7 @@ export default function addFaci() {
           </Select>
         </Form.Item>
         <Form.Item className="" label="faci_cagro_id">
-          <Select onChange={handlerCagroId}>
+          <Select onChange={handlerCagroId} placeholder="faci cagro">
             <Select.Option value={1}>Restorant</Select.Option>
             <Select.Option value={2}>Room</Select.Option>
             <Select.Option value={3}>Meet Room</Select.Option>
@@ -269,6 +269,7 @@ export default function addFaci() {
             placeholder=""
             value={dataFaci.faci_hotel_id}
             onChange={eventHandler("faci_hotel_id")}
+            readOnly
           />
         </Form.Item>
         <Form.Item>

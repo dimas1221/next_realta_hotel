@@ -13,6 +13,7 @@ import {
   EditOutlined,
   ExclamationCircleFilled,
   FundViewOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 
 type LayoutType = Parameters<typeof Form>[0]["layout"];
@@ -75,13 +76,7 @@ export default function index() {
   // buuton edit
   const showEdit = (id: any) => {
     // navigate('/editcust', {state:{id}})
-    router.push(
-      {
-        pathname: "hotelAdmin/updatehotel",
-        query: { id },
-      }
-      // "hotelAdmin/updatehotel"
-    );
+    router.push("hotelAdmin/updatehotel/" + id);
   };
 
   const showFaci = (id: any) => {
@@ -124,11 +119,11 @@ export default function index() {
       render: (_: any, record: { hotelId: any }) => (
         <span>
           <Button
-            className="h-10 px-6 font-semibold rounded-md  text-blue-500 text-2xl hover:text-green-400 "
+            className="h-10 px-6 font-semibold rounded-md  text-blue-500 text-sm hover:text-green-400 "
             type="primary"
             onClick={() => showFaci(record.hotelId)}
           >
-            <FundViewOutlined />
+            <UnorderedListOutlined />
           </Button>
         </span>
       ),
@@ -140,7 +135,7 @@ export default function index() {
         <span className="flex">
           <>
             <Button
-              className="h-10 px-6 font-semibold rounded-md  text-yellow-500 text-2xl hover:text-green-400 "
+              className="h-10 px-6 font-semibold rounded-md  text-yellow-500 text-sm hover:text-green-400 "
               type="primary"
               onClick={() => showEdit(record.hotelId)}
             >
@@ -149,7 +144,7 @@ export default function index() {
             <Button
               onClick={() => showDeleteConfirm(record.hotelId)}
               type="dashed"
-              className="h-10 px-6 font-semibold rounded-md  text-red-500 text-2xl hover:text-green-400"
+              className="h-10 px-6 font-semibold rounded-md  text-red-500 text-sm hover:text-green-400"
             >
               <DeleteOutlined />
             </Button>

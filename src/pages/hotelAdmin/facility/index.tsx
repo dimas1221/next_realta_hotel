@@ -21,8 +21,8 @@ export default function index() {
   //   tambah faci
   const addData = (id: any) => {
     router.push({
-      pathname: "facility/addFaci",
-      query: { id },
+      pathname: "facility/addFaci/" + id,
+      //   query: { id },
     });
   };
 
