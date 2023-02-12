@@ -19,9 +19,10 @@ export default function index() {
   }, [id]);
 
   //   tambah faci
-  const addData = () => {
+  const addData = (id: any) => {
     router.push({
       pathname: "facility/addFaci",
+      query: { id },
     });
   };
 
@@ -60,7 +61,7 @@ export default function index() {
         <Button
           className="bg-red-500 mb-5 w-28"
           type="primary"
-          onClick={addData}
+          onClick={() => addData(id)}
         >
           Add
         </Button>
