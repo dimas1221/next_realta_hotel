@@ -98,6 +98,16 @@ const insertFaci = async (data: any) => {
   }
 };
 
+// GET SEARCHH ADDR
+const getAddrSearch = async () => {
+  try {
+    const result = await axios.get("/hotel/address");
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 const ApiHotel = {
   getCardHotel,
   getFaciAllHotel,
@@ -109,6 +119,7 @@ const ApiHotel = {
   getFaciAdmin,
   getMaxIdRoom,
   insertFaci,
+  getAddrSearch,
 };
 
 export default ApiHotel;

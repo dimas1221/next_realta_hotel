@@ -5,10 +5,12 @@ import {
   doHotelAdminReqFailed,
   doInsertHotelSuccess,
   doInsertHotelFailed,
-  doDelHotel,
   doDelHotelFailed,
   doDelHotelSucced,
   doUpdateHotelSucces,
+  doUpdateHotelFailed,
+  doAddrSearchReqSuccess,
+  doAddrSearchReqFailed,
 } from "../action/actionHotelAdmin";
 
 function* handlerHotelAdmin(): any {
@@ -45,7 +47,17 @@ function* handlerUpdateHotel(action: any) {
     yield call(ApiHotel.updateHotel, action.payload);
     yield put(doUpdateHotelSucces(action.payload));
   } catch (err) {
-    return err;
+    yield put(doUpdateHotelFailed(err));
+  }
+}
+
+// handlr get addrHotel
+function* handlerHotelAddr(): any {
+  try {
+    const result = yield call(ApiHotel.getAddrSearch);
+    yield put(doAddrSearchReqSuccess(result.data));
+  } catch (error) {
+    yield put(doAddrSearchReqFailed(error));
   }
 }
 
@@ -54,4 +66,5 @@ export {
   handlerInsertHotel,
   handlerDeleteHotel,
   handlerUpdateHotel,
+  handlerHotelAddr,
 };

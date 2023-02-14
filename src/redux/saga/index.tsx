@@ -4,6 +4,7 @@ import { handlerCardHotel } from "./hotelSaga";
 import { handlerFaciAllHotel } from "./faciAllHotelSaga";
 import {
   handlerDeleteHotel,
+  handlerHotelAddr,
   handlerHotelAdmin,
   handlerInsertHotel,
   handlerUpdateHotel,
@@ -27,6 +28,7 @@ function* watchAll() {
     takeEvery(ActionTypes.GET_FACIADMIN, handlerGetFaciAdmin),
     takeEvery(ActionTypes.GET_MAXIDROOM, handlerGetMaxIdRoom),
     takeEvery(ActionTypes.ADD_FACIADMIN, handlerInsertFaciAdmin),
+    takeEvery(ActionTypes.GET_ADDRSEARCH, handlerHotelAddr),
   ]);
 }
 

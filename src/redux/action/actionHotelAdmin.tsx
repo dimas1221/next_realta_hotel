@@ -81,3 +81,24 @@ export const doUpdateHotelFailed = (payload: any) => {
     payload,
   };
 };
+
+// get search addr
+export const doAddrSearchReq = () => {
+  return {
+    type: ActionTypes.GET_ADDRSEARCH,
+  };
+};
+
+export const doAddrSearchReqSuccess = (payload: any) => {
+  return {
+    type: ActionTypes.GET_ADDRSEARCH_SUCCED,
+    payload,
+  };
+};
+
+export const doAddrSearchReqFailed = (payload: any) => {
+  return {
+    type: ActionTypes.GET_ADDRSEARCH_FAILED,
+    payload,
+  };
+};

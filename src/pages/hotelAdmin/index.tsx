@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {
+  doAddrSearchReq,
   doDelHotel,
   doHotelAdminReq,
   doInsertHotel,
-  doUpdateHotel,
 } from "@/redux/action/actionHotelAdmin";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Button, Form, Input, Modal, Radio, Space, Table } from "antd";
@@ -12,7 +12,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
-  FundViewOutlined,
+  SearchOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
 
@@ -25,9 +25,11 @@ export default function index() {
   let dataHotel = useSelector(
     (state: any) => state.HotelAdminReducer.hotelAdmin
   );
-
+  let dataAddr = useSelector((state: any) => state.AddrHotelReducer.HotelAddr);
+  console.log("add", dataAddr);
   useEffect(() => {
     dispatch(doHotelAdminReq());
+    dispatch(doAddrSearchReq());
   }, []);
 
   // modalinsert
@@ -155,6 +157,7 @@ export default function index() {
 
   const [valueHotel, setValueHotel] = useState({
     hotelName: "",
+    hotelAddr: 0,
     hotelDescription: "",
     hotelRatingStar: 0,
     hotelPhonenumber: "",
@@ -181,6 +184,26 @@ export default function index() {
   const [visible, setVisible] = useState("hidden");
   // end
 
+  const [query, setQuery] = useState("");
+  const handleSearch = (e: any) => {
+    // setQuery(e.target.value);
+    const input = e.target.value.toLowerCase().replace(/\s/g, "");
+    setQuery(input);
+  };
+
+  const handleSelect = (e: any) => {
+    setValueHotel({ ...valueHotel, hotelAddr: parseInt(e.target.value) });
+  };
+
+  const searchResults = dataAddr
+    .filter((addr: any) =>
+      addr.place.toLowerCase().replace(/\s/g, "").includes(query)
+    )
+    .map((addr: any) => (
+      <option key={addr.hotel_addr_id} value={addr.hotel_addr_id}>
+        {addr.place}
+      </option>
+    ));
   return (
     <div className="w-3/4 mx-auto text-center">
       <Alert
@@ -211,21 +234,21 @@ export default function index() {
             onCancel={() => setModal2Open(false)}
             footer={null}
           >
-            {/* form */}
             <Form
-              {...formItemLayout}
-              layout={formLayout}
-              form={form}
-              initialValues={{ layout: formLayout }}
-              onValuesChange={onFormLayoutChange}
-              style={{ maxWidth: 600 }}
+              // {...formItemLayout}
+              layout="vertical"
+              // form={form}
+              // initialValues={{ layout: formLayout }}
+              // onValuesChange={onFormLayoutChange}
+              // style={{ maxWidth: 600 }}
+              className="bg-white p-6 rounded-lg mx-auto"
             >
-              <Form.Item label="Form Layout" name="layout">
+              {/* <Form.Item label="Form Layout" name="layout">
                 <Radio.Group value={formLayout}>
                   <Radio.Button value="horizontal">Horizontal</Radio.Button>
                   <Radio.Button value="vertical">Vertical</Radio.Button>
                 </Radio.Group>
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item label="hotelName">
                 <Input
                   placeholder=""
@@ -233,12 +256,15 @@ export default function index() {
                   onChange={eventHandler("hotelName")}
                 />
               </Form.Item>
-              <Form.Item label="hotelDescription">
-                <TextArea
-                  placeholder=""
-                  value={valueHotel.hotelDescription}
-                  onChange={eventHandler("hotelDescription")}
-                />
+              <Form.Item label="search address">
+                <div className="flex">
+                  <SearchOutlined className="text-xl bg-blue-500 rounded w-10 text-white mr-2" />
+                  <Input type="search" value={query} onChange={handleSearch} />
+                </div>
+                <select value={valueHotel.hotelAddr} onChange={handleSelect}>
+                  {searchResults}
+                  <option value="">-pilih address-</option>
+                </select>
               </Form.Item>
               <Form.Item label="hotelRatingStar">
                 <Input
@@ -257,6 +283,18 @@ export default function index() {
                   type="text"
                 />
               </Form.Item>
+              <Form.Item label="hotelDescription">
+                <TextArea
+                  placeholder=""
+                  value={valueHotel.hotelDescription}
+                  onChange={eventHandler("hotelDescription")}
+                />
+              </Form.Item>
+              <Form.Item className="items-center">
+                <Button type="primary" className="bg-red-500" onClick={addData}>
+                  Submit
+                </Button>
+              </Form.Item>
               <Form.Item>
                 <Input
                   placeholder="input placeholder"
@@ -266,10 +304,14 @@ export default function index() {
                   type="date"
                 />
               </Form.Item>
-              <Form.Item {...buttonItemLayout}>
-                <Button type="primary" className="bg-red-500" onClick={addData}>
-                  Submit
-                </Button>
+              <Form.Item>
+                <Input
+                  type="number"
+                  placeholder=""
+                  value={valueHotel.hotelAddr}
+                  onChange={eventHandler("hotelAddr")}
+                  hidden
+                />
               </Form.Item>
             </Form>
             {/* end */}
