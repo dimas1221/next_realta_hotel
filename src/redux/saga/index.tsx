@@ -8,7 +8,11 @@ import {
   handlerInsertHotel,
   handlerUpdateHotel,
 } from "./hotelAdminSaga";
-import { handlerGetFaciAdmin, handlerGetMaxIdRoom } from "./faciAdminSaga";
+import {
+  handlerGetFaciAdmin,
+  handlerGetMaxIdRoom,
+  handlerInsertFaciAdmin,
+} from "./faciAdminSaga";
 import { handlerHore } from "./horeSaga";
 
 function* watchAll() {
@@ -22,6 +26,7 @@ function* watchAll() {
     takeEvery(ActionTypes.UPDATE_HOTELADMIN, handlerUpdateHotel),
     takeEvery(ActionTypes.GET_FACIADMIN, handlerGetFaciAdmin),
     takeEvery(ActionTypes.GET_MAXIDROOM, handlerGetMaxIdRoom),
+    takeEvery(ActionTypes.ADD_FACIADMIN, handlerInsertFaciAdmin),
   ]);
 }
 

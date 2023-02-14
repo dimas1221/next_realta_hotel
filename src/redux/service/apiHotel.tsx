@@ -88,6 +88,16 @@ const getMaxIdRoom = async () => {
   }
 };
 
+// insert faci
+const insertFaci = async (data: any) => {
+  try {
+    const result = await axios.post("/facility/insert", data);
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 const ApiHotel = {
   getCardHotel,
   getFaciAllHotel,
@@ -98,6 +108,7 @@ const ApiHotel = {
   updateHotel,
   getFaciAdmin,
   getMaxIdRoom,
+  insertFaci,
 };
 
 export default ApiHotel;

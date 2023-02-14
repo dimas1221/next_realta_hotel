@@ -3,6 +3,8 @@ import ApiHotel from "../service/apiHotel";
 import {
   doFaciAdminReqSuccess,
   doFaciAdminReqFailed,
+  doInsertFaciFailed,
+  doInsertFaciSucced,
 } from "../action/actionFaciAdmin";
 import {
   doMaxRoomIdReqFailed,
@@ -26,5 +28,14 @@ function* handlerGetMaxIdRoom(): any {
     yield put(doMaxRoomIdReqFailed(error));
   }
 }
+// insert
+function* handlerInsertFaciAdmin(action: any): any {
+  try {
+    yield call(ApiHotel.insertFaci, action.payload);
+    yield put(doInsertFaciSucced(action.payload));
+  } catch (error) {
+    yield put(doInsertFaciFailed(error));
+  }
+}
 
-export { handlerGetFaciAdmin, handlerGetMaxIdRoom };
+export { handlerGetFaciAdmin, handlerGetMaxIdRoom, handlerInsertFaciAdmin };

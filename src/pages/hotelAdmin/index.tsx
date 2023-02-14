@@ -80,10 +80,7 @@ export default function index() {
   };
 
   const showFaci = (id: any) => {
-    router.push({
-      pathname: "hotelAdmin/facility",
-      query: { id },
-    });
+    router.push("hotelAdmin/facility/" + id);
   };
   const columns = [
     {
@@ -173,7 +170,7 @@ export default function index() {
   const addData = (e: any) => {
     e.preventDefault();
     dispatch(doInsertHotel(valueHotel));
-    router.push("/hotelAdmin");
+
     setModal2Open(false);
     setVisible("");
     setTimeout(() => {
