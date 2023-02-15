@@ -116,6 +116,16 @@ const removeFaci = async (id: any) => {
   }
 };
 
+// get fapho
+const getFaphoAdmin = async () => {
+  try {
+    const result = await axios.get("/facility-photos/view");
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
 const ApiHotel = {
   getCardHotel,
   getFaciAllHotel,
@@ -129,6 +139,7 @@ const ApiHotel = {
   insertFaci,
   getAddrSearch,
   removeFaci,
+  getFaphoAdmin,
 };
 
 export default ApiHotel;

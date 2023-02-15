@@ -19,6 +19,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
+  MenuOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
 
@@ -35,9 +36,9 @@ export default function Faci() {
   );
 
   const faciOne = faciHotel.filter((item: any) => item.faci_hotel_id == id);
-
   useEffect(() => {
     dispatch(doFaciAdminReq());
+    dispatch(doMaxRoomIdReq());
   }, []);
 
   const columns: ColumnType<any>[] = [
@@ -130,21 +131,21 @@ export default function Faci() {
       key: "action",
       fixed: "right",
       render: (_: any, record: { faci_id: any }) => (
-        <Select defaultValue={record} className="w-32 items-center">
+        <Select defaultValue={record} className="w-32">
           <Select.Option>
             <Button
-              className=" px-6  text-yellow-500 text-sm hover:text-green-400"
+              className="text-yellow-500 text-sm hover:text-green-400 w-24"
               type="primary"
             >
               <EditOutlined />
-              edit
+              update
             </Button>
           </Select.Option>
           <Select.Option>
             <Button
               onClick={() => showDeleteConfirm(record.faci_id)}
-              type="dashed"
-              className="h-10 px-6 text-red-500 text-sm hover:text-green-400"
+              type="primary"
+              className="text-red-500 text-sm hover:text-green-400 w-24"
             >
               <DeleteOutlined />
               delete
@@ -152,9 +153,11 @@ export default function Faci() {
           </Select.Option>
           <Select.Option>
             <Button
-              className="h-10 px-6  text-blue-500 text-sm hover:text-green-400 "
+              className="text-blue-500 text-sm hover:text-green-400 w-24"
               type="primary"
+              onClick={() => showFapho(record.faci_id)}
             >
+              <MenuOutlined />
               Photo
             </Button>
           </Select.Option>
@@ -197,8 +200,6 @@ export default function Faci() {
   const [meetRoom, setMeetRoom] = useState();
   const [gym, setGym] = useState();
   useEffect(() => {
-    dispatch(doMaxRoomIdReq());
-
     const result1 = IdRoom.find((item: any) => item.faci_cagro_id == 1);
     setResto(result1);
     const result2 = IdRoom.find((item: any) => item.faci_cagro_id == 2);
@@ -207,7 +208,7 @@ export default function Faci() {
     setMeetRoom(result3);
     const result4 = IdRoom.find((item: any) => item.faci_cagro_id == 4);
     setGym(result4);
-  }, [IdRoom, id]);
+  }, [IdRoom]);
 
   useEffect(() => {
     if (resto) {
@@ -321,7 +322,10 @@ export default function Faci() {
       },
     });
   };
-
+  // handler fapho
+  const showFapho = (id: any) => {
+    router.push("fapho/" + id);
+  };
   // end
   return (
     <div className="w-3/4 mx-auto text-center">

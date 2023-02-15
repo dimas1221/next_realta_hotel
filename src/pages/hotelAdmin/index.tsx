@@ -22,6 +22,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
+  MenuOutlined,
   SearchOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
@@ -136,19 +137,19 @@ export default function index() {
         <Select defaultValue={record} className="w-32 items-center">
           <Select.Option>
             <Button
-              className=" px-6  text-yellow-500 text-sm hover:text-green-400"
+              className="w-24 text-yellow-500 text-sm hover:text-green-400"
               type="primary"
               onClick={() => showEdit(record.hotelId)}
             >
               <EditOutlined />
-              edit
+              update
             </Button>
           </Select.Option>
           <Select.Option>
             <Button
               onClick={() => showDeleteConfirm(record.hotelId)}
               type="primary"
-              className=" px-6  text-red-500 text-sm hover:text-green-400"
+              className="w-24 text-red-500 text-sm hover:text-green-400"
             >
               <DeleteOutlined />
               delete
@@ -156,10 +157,11 @@ export default function index() {
           </Select.Option>
           <Select.Option>
             <Button
-              className="h-10 px-6  text-blue-500 text-sm hover:text-green-400 "
+              className="h-10w-24 text-blue-500 text-sm hover:text-green-400 "
               type="primary"
               onClick={() => showFaci(record.hotelId)}
             >
+              <MenuOutlined />
               Facility
             </Button>
           </Select.Option>

@@ -16,6 +16,7 @@ import {
   handlerInsertFaciAdmin,
 } from "./faciAdminSaga";
 import { handlerHore } from "./horeSaga";
+import { handlerFapho } from "./faphoAdminSaga";
 
 function* watchAll() {
   yield all([
@@ -31,6 +32,7 @@ function* watchAll() {
     takeEvery(ActionTypes.ADD_FACIADMIN, handlerInsertFaciAdmin),
     takeEvery(ActionTypes.GET_ADDRSEARCH, handlerHotelAddr),
     takeEvery(ActionTypes.DEL_FACI, handlerDeleteFaci),
+    takeEvery(ActionTypes.GET_FAPHO, handlerFapho),
   ]);
 }
 

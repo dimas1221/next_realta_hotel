@@ -7,6 +7,7 @@ import HotelAdminReducer from "../reducer/hotelAdminReducer";
 import FaciAdminReducer from "../reducer/faciAdminReducer";
 import RoomNumberReducer from "../reducer/maxRoomIdReducer";
 import AddrHotelReducer from "../reducer/addrHotelReducer";
+import FaphoReducer from "../reducer/faphoAdminReducer";
 // end
 import { combineReducers } from "redux";
 import rootSaga from "../saga";
@@ -22,6 +23,7 @@ const reducer = combineReducers({
   FaciAdminReducer,
   RoomNumberReducer,
   AddrHotelReducer,
+  FaphoReducer,
 });
 
 const store = configureStore({

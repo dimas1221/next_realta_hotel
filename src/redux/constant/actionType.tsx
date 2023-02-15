@@ -58,6 +58,11 @@ const ActionTypes = {
   DEL_FACI: "DEL_FACI",
   DEL_FACI_SUCCED: "DEL_FACI_SUCCED",
   DEL_FACI_FAILED: "DEL_FACI_FAILED",
+
+  // get fapho
+  GET_FAPHO: "GET_FAPHO",
+  GET_FAPHO_SUCCED: "GET_FAPHO_SUCCED",
+  GET_FAPHO_FAILED: "GET_FAPHO_FAILED",
 };
 
 export default ActionTypes;
