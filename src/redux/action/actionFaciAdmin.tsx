@@ -40,3 +40,23 @@ export const doInsertFaciFailed = (payload: any) => {
     payload,
   };
 };
+
+// DELETE
+export const doDelFaci = (payload: any) => {
+  return {
+    type: ActionTypes.DEL_FACI,
+    payload,
+  };
+};
+export const doDelFaciSucced = (payload: any) => {
+  return {
+    type: ActionTypes.DEL_FACI_SUCCED,
+    payload,
+  };
+};
+export const doDelFaciFailed = (payload: any) => {
+  return {
+    type: ActionTypes.DEL_FACI_FAILED,
+    payload,
+  };
+};

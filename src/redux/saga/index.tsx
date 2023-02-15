@@ -10,6 +10,7 @@ import {
   handlerUpdateHotel,
 } from "./hotelAdminSaga";
 import {
+  handlerDeleteFaci,
   handlerGetFaciAdmin,
   handlerGetMaxIdRoom,
   handlerInsertFaciAdmin,
@@ -29,6 +30,7 @@ function* watchAll() {
     takeEvery(ActionTypes.GET_MAXIDROOM, handlerGetMaxIdRoom),
     takeEvery(ActionTypes.ADD_FACIADMIN, handlerInsertFaciAdmin),
     takeEvery(ActionTypes.GET_ADDRSEARCH, handlerHotelAddr),
+    takeEvery(ActionTypes.DEL_FACI, handlerDeleteFaci),
   ]);
 }
 

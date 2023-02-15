@@ -106,6 +106,14 @@ const getAddrSearch = async () => {
   } catch (error) {
     return error;
   }
+}; // delete faci
+const removeFaci = async (id: any) => {
+  try {
+    const result = await axios.delete(`/facility/delete/${id}`);
+    return result;
+  } catch (err) {
+    return err;
+  }
 };
 
 const ApiHotel = {
@@ -120,6 +128,7 @@ const ApiHotel = {
   getMaxIdRoom,
   insertFaci,
   getAddrSearch,
+  removeFaci,
 };
 
 export default ApiHotel;

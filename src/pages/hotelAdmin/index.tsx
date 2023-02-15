@@ -6,7 +6,17 @@ import {
   doInsertHotel,
 } from "@/redux/action/actionHotelAdmin";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Button, Form, Input, Modal, Radio, Space, Table } from "antd";
+import {
+  Alert,
+  Button,
+  Form,
+  Input,
+  Modal,
+  Radio,
+  Select,
+  Space,
+  Table,
+} from "antd";
 import { useRouter } from "next/router";
 import {
   DeleteOutlined,
@@ -15,6 +25,7 @@ import {
   SearchOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
+import { ColumnType } from "antd/es/table";
 
 type LayoutType = Parameters<typeof Form>[0]["layout"];
 
@@ -84,7 +95,13 @@ export default function index() {
   const showFaci = (id: any) => {
     router.push("hotelAdmin/facility/" + id);
   };
-  const columns = [
+  const columns: ColumnType<any>[] = [
+    {
+      title: "No.",
+      dataIndex: "index",
+      render: (text: any, record: any, index: any) => index + 1,
+      fixed: "left",
+    },
     {
       title: "hotel",
       dataIndex: "hotelName",
@@ -113,42 +130,40 @@ export default function index() {
       key: "hotelModifiedDate",
     },
     {
-      title: "facilities",
-      key: "faicilities",
-      render: (_: any, record: { hotelId: any }) => (
-        <span>
-          <Button
-            className="h-10 px-6 font-semibold rounded-md  text-blue-500 text-sm hover:text-green-400 "
-            type="primary"
-            onClick={() => showFaci(record.hotelId)}
-          >
-            <UnorderedListOutlined />
-          </Button>
-        </span>
-      ),
-    },
-    {
       title: "Aksi",
       key: "action",
       render: (_: any, record: { hotelId: any }) => (
-        <span className="flex">
-          <>
+        <Select defaultValue={record} className="w-32 items-center">
+          <Select.Option>
             <Button
-              className="h-10 px-6 font-semibold rounded-md  text-yellow-500 text-sm hover:text-green-400 "
+              className=" px-6  text-yellow-500 text-sm hover:text-green-400"
               type="primary"
               onClick={() => showEdit(record.hotelId)}
             >
               <EditOutlined />
+              edit
             </Button>
+          </Select.Option>
+          <Select.Option>
             <Button
               onClick={() => showDeleteConfirm(record.hotelId)}
-              type="dashed"
-              className="h-10 px-6 font-semibold rounded-md  text-red-500 text-sm hover:text-green-400"
+              type="primary"
+              className=" px-6  text-red-500 text-sm hover:text-green-400"
             >
               <DeleteOutlined />
+              delete
             </Button>
-          </>
-        </span>
+          </Select.Option>
+          <Select.Option>
+            <Button
+              className="h-10 px-6  text-blue-500 text-sm hover:text-green-400 "
+              type="primary"
+              onClick={() => showFaci(record.hotelId)}
+            >
+              Facility
+            </Button>
+          </Select.Option>
+        </Select>
       ),
     },
   ];
@@ -216,11 +231,11 @@ export default function index() {
         afterClose={() => setVisible("")}
         className={visible}
       />
-      <div className="flex justify-start">
+      <div className="flex justify-end">
         {/* modal add data */}
         <>
           <Button
-            className="bg-red-500 mb-5 w-28"
+            className="bg-red-500 mb-5 w-32 h-12"
             type="primary"
             onClick={() => setModal2Open(true)}
           >
@@ -234,21 +249,7 @@ export default function index() {
             onCancel={() => setModal2Open(false)}
             footer={null}
           >
-            <Form
-              // {...formItemLayout}
-              layout="vertical"
-              // form={form}
-              // initialValues={{ layout: formLayout }}
-              // onValuesChange={onFormLayoutChange}
-              // style={{ maxWidth: 600 }}
-              className="bg-white p-6 rounded-lg mx-auto"
-            >
-              {/* <Form.Item label="Form Layout" name="layout">
-                <Radio.Group value={formLayout}>
-                  <Radio.Button value="horizontal">Horizontal</Radio.Button>
-                  <Radio.Button value="vertical">Vertical</Radio.Button>
-                </Radio.Group>
-              </Form.Item> */}
+            <Form layout="vertical" className="bg-white p-6 rounded-lg mx-auto">
               <Form.Item label="hotelName">
                 <Input
                   placeholder=""
@@ -259,9 +260,20 @@ export default function index() {
               <Form.Item label="search address">
                 <div className="flex">
                   <SearchOutlined className="text-xl bg-blue-500 rounded w-10 text-white mr-2" />
-                  <Input type="search" value={query} onChange={handleSearch} />
+                  <Input
+                    type="search"
+                    value={query}
+                    onChange={handleSearch}
+                    className="w-1/4"
+                  />
                 </div>
-                <select value={valueHotel.hotelAddr} onChange={handleSelect}>
+              </Form.Item>
+              <Form.Item label="Address">
+                <select
+                  value={valueHotel.hotelAddr}
+                  onChange={handleSelect}
+                  className="h-20 border border-solid border-gray-500 w-11/12"
+                >
                   {searchResults}
                   <option value="">-pilih address-</option>
                 </select>
@@ -270,9 +282,11 @@ export default function index() {
                 <Input
                   placeholder=""
                   type="number"
-                  min={0}
+                  min={1}
+                  max={5}
                   value={valueHotel.hotelRatingStar}
                   onChange={eventHandler("hotelRatingStar")}
+                  className="w-1/4"
                 />
               </Form.Item>
               <Form.Item label="hotelPhonenumber">

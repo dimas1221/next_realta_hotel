@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { doFaciAdminReq } from "@/redux/action/actionFaciAdmin";
+import { doDelFaci, doFaciAdminReq } from "@/redux/action/actionFaciAdmin";
 import {
   Button,
   Col,
@@ -129,18 +129,36 @@ export default function Faci() {
       title: "Aksi",
       key: "action",
       fixed: "right",
-      render: (_: any, record: { faciId: any }) => (
-        <span className="flex">
-          <>
+      render: (_: any, record: { faci_id: any }) => (
+        <Select defaultValue={record} className="w-32 items-center">
+          <Select.Option>
             <Button
-              onClick={() => showDeleteConfirm(record.faciId)}
+              className=" px-6  text-yellow-500 text-sm hover:text-green-400"
+              type="primary"
+            >
+              <EditOutlined />
+              edit
+            </Button>
+          </Select.Option>
+          <Select.Option>
+            <Button
+              onClick={() => showDeleteConfirm(record.faci_id)}
               type="dashed"
-              className="h-10 px-6 font-semibold rounded-md  text-red-500 text-sm hover:text-green-400"
+              className="h-10 px-6 text-red-500 text-sm hover:text-green-400"
             >
               <DeleteOutlined />
+              delete
             </Button>
-          </>
-        </span>
+          </Select.Option>
+          <Select.Option>
+            <Button
+              className="h-10 px-6  text-blue-500 text-sm hover:text-green-400 "
+              type="primary"
+            >
+              Photo
+            </Button>
+          </Select.Option>
+        </Select>
       ),
     },
   ];
@@ -296,7 +314,7 @@ export default function Faci() {
       okType: "danger",
       cancelText: "No",
       onOk() {
-        //  dispatch(doDelHotel(id));
+        dispatch(doDelFaci(id));
       },
       onCancel() {
         console.log("OK");
