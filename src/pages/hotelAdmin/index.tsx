@@ -134,7 +134,7 @@ export default function index() {
       title: "Aksi",
       key: "action",
       render: (_: any, record: { hotelId: any }) => (
-        <Select defaultValue={record} className="w-32 items-center">
+        <Select defaultValue={record} className="w-32">
           <Select.Option>
             <Button
               className="w-24 text-yellow-500 text-sm hover:text-green-400"
@@ -221,6 +221,8 @@ export default function index() {
         {addr.place}
       </option>
     ));
+
+  // search tabel
   return (
     <div className="w-3/4 mx-auto text-center">
       <Alert
@@ -237,7 +239,7 @@ export default function index() {
         {/* modal add data */}
         <>
           <Button
-            className="bg-red-500 mb-5 w-32 h-12"
+            className="bg-red-500 mb-5 w-32"
             type="primary"
             onClick={() => setModal2Open(true)}
           >
@@ -338,7 +340,7 @@ export default function index() {
       <div>
         <Table
           scroll={{ x: true }}
-          size="middle"
+          size="small"
           dataSource={dataHotel}
           columns={columns}
         />

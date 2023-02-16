@@ -57,7 +57,7 @@ const applyUpdateHotel = async (
   action: { payload: { hotelId: any } }
 ) => {
   return state.hotelAdmin.map((hotelAdmin) => {
-    if (hotelAdmin.hotelId === action.payload.hotelId) {
+    if (hotelAdmin.hotelId === action.payload) {
       return {
         ...state,
         ...action.payload,
