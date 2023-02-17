@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { doDelFaci, doFaciAdminReq } from "@/redux/action/actionFaciAdmin";
 import {
+  Alert,
   Button,
   Col,
   Form,
@@ -311,8 +312,15 @@ export default function Faci() {
     e.preventDefault();
     dispatch(doInsertFaci(dataFaci));
     setModal2Open(false);
+
+    setVisible("");
+    setTimeout(() => {
+      setVisible("hidden");
+    }, 2000);
   };
   // end
+  // alert
+  const [visible, setVisible] = useState("hidden");
 
   // modal delete
   const { confirm } = Modal;
@@ -344,6 +352,16 @@ export default function Faci() {
   // end
   return (
     <div className="w-3/4 mx-auto text-center">
+      <Alert
+        message="Success"
+        description="Data has been successfully entered into the table."
+        type="success"
+        showIcon
+        style={{ marginBottom: "16px" }}
+        closable
+        afterClose={() => setVisible("")}
+        className={visible}
+      />
       <div className="flex justify-start">
         {/* modal add data */}
         <>
