@@ -44,28 +44,34 @@ function HotelAdminReducer(state = initialState, action: any) {
     case ActionTypes.UPDATE_HOTELADMIN:
       return { ...state };
     case ActionTypes.UPDATE_HOTELADMIN_SUCCED:
-      return applyUpdateHotel(state, action);
-    case ActionTypes.UPDATE_HOTELADMIN_FAILED:
-      return applyUpdateHotel(state, action);
+      state.hotelAdmin.splice(
+        state.hotelAdmin.findIndex((i: any) => i.hotelId == action.payload),
+        1,
+        action.payload
+      );
+      return {
+        ...state,
+        hotelAdmin: [...state.hotelAdmin],
+      };
     default:
       return state;
   }
 }
 
-const applyUpdateHotel = async (
-  state: { hotelAdmin: any[] },
-  action: { payload: { hotelId: any } }
-) => {
-  return state.hotelAdmin.map((hotelAdmin) => {
-    if (hotelAdmin.hotelId === action.payload) {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    } else {
-      return state;
-    }
-  });
-};
+// const applyUpdateHotel = async (
+//   state: { hotelAdmin: any[] },
+//   action: { payload: { hotelId: any } }
+// ) => {
+//   return state.hotelAdmin.map((hotelAdmin) => {
+//     if (hotelAdmin.hotelId === action.payload) {
+//       return {
+//         ...state,
+//         ...action.payload,
+//       };
+//     } else {
+//       return state;
+//     }
+//   });
+// };
 
 export default HotelAdminReducer;

@@ -267,7 +267,7 @@ export default function index() {
   useEffect(() => {
     dispatch(doHotelAdminReq());
     dispatch(doAddrSearchReq());
-  }, [setValueHotel]);
+  }, []);
   return (
     <div className="w-3/4 mx-auto text-center">
       <Alert
