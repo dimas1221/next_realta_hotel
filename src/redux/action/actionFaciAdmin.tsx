@@ -30,13 +30,13 @@ export const doInsertFaci = (payload: any) => {
 };
 export const doInsertFaciSucced = (payload: any) => {
   return {
-    type: ActionTypes.ADD_FACIADMIN,
+    type: ActionTypes.ADD_FACIADMIN_SUCCED,
     payload,
   };
 };
 export const doInsertFaciFailed = (payload: any) => {
   return {
-    type: ActionTypes.ADD_FACIADMIN,
+    type: ActionTypes.ADD_FACIADMIN_FAILED,
     payload,
   };
 };

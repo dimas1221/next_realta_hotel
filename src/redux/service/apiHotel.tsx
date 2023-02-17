@@ -126,6 +126,16 @@ const getFaphoAdmin = async () => {
   }
 };
 
+// get fph
+const getFaciPricehistory = async () => {
+  try {
+    const result = await axios.get("/facility-price-history/view");
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 const ApiHotel = {
   getCardHotel,
   getFaciAllHotel,
@@ -140,6 +150,7 @@ const ApiHotel = {
   getAddrSearch,
   removeFaci,
   getFaphoAdmin,
+  getFaciPricehistory,
 };
 
 export default ApiHotel;

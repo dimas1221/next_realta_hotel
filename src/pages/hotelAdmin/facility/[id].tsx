@@ -161,6 +161,16 @@ export default function Faci() {
               Photo
             </Button>
           </Select.Option>
+          <Select.Option>
+            <Button
+              className="text-blue-500 text-sm hover:text-green-400 w-24"
+              type="primary"
+              onClick={() => showFPH(record.faci_id)}
+            >
+              <MenuOutlined />
+              faciPrice
+            </Button>
+          </Select.Option>
         </Select>
       ),
     },
@@ -327,6 +337,11 @@ export default function Faci() {
     router.push("fapho/" + id);
   };
   // end
+  // handler fph
+  const showFPH = (id: any) => {
+    router.push("faciPriceHistory/" + id);
+  };
+  // end
   return (
     <div className="w-3/4 mx-auto text-center">
       <div className="flex justify-start">
@@ -471,12 +486,12 @@ export default function Faci() {
                       hidden
                     />
                   </Form.Item>
-                  <Form.Item className="">
+                  <Form.Item className="faciHotel">
                     <Input
                       placeholder=""
                       value={dataFaci.faciHotel}
                       onChange={eventHandler("faciHotel")}
-                      hidden
+                      readOnly
                     />
                   </Form.Item>
                 </Col>
