@@ -6,29 +6,18 @@ import {
   doInsertHotel,
 } from "@/redux/action/actionHotelAdmin";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Alert,
-  Button,
-  Form,
-  Input,
-  Modal,
-  Radio,
-  Select,
-  Space,
-  Table,
-} from "antd";
+import { Alert, Button, Form, Input, Modal, Table } from "antd";
 import { useRouter } from "next/router";
 import {
   DeleteOutlined,
   EditOutlined,
   ExclamationCircleFilled,
+  MenuFoldOutlined,
   MenuOutlined,
+  PlusOutlined,
   SearchOutlined,
-  UnorderedListOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
-
-type LayoutType = Parameters<typeof Form>[0]["layout"];
 
 export default function index() {
   const dispatch = useDispatch();
@@ -37,12 +26,9 @@ export default function index() {
   let dataHotel = useSelector(
     (state: any) => state.HotelAdminReducer.hotelAdmin
   );
+  console.log("object", dataHotel);
   let dataAddr = useSelector((state: any) => state.AddrHotelReducer.HotelAddr);
   console.log("add", dataAddr);
-  useEffect(() => {
-    dispatch(doHotelAdminReq());
-    dispatch(doAddrSearchReq());
-  }, []);
 
   // modalinsert
   const [modal2Open, setModal2Open] = useState(false);
@@ -61,29 +47,10 @@ export default function index() {
         dispatch(doDelHotel(id));
       },
       onCancel() {
-        console.log("OK");
+        console.log("calcle");
       },
     });
   };
-
-  // end
-  // form inputan
-  const [form] = Form.useForm();
-  const [formLayout, setFormLayout] = useState<LayoutType>("horizontal");
-
-  const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
-    setFormLayout(layout);
-  };
-
-  const formItemLayout =
-    formLayout === "horizontal"
-      ? { labelCol: { span: 8 }, wrapperCol: { span: 14 } }
-      : null;
-
-  const buttonItemLayout =
-    formLayout === "horizontal"
-      ? { wrapperCol: { span: 14, offset: 4 } }
-      : null;
 
   // end
 
@@ -95,6 +62,20 @@ export default function index() {
 
   const showFaci = (id: any) => {
     router.push("hotelAdmin/facility/" + id);
+  };
+
+  // dropdown
+  const [dropdowns, setDropdowns] = useState(
+    dataHotel.reduce((acc: any, item: any) => {
+      return { ...acc, [item.hotelId]: false };
+    }, {})
+  );
+
+  const toggleDropdown = (dropdown: any) => {
+    setDropdowns({
+      ...dropdowns,
+      [dropdown]: !dropdowns[dropdown],
+    });
   };
   const columns: ColumnType<any>[] = [
     {
@@ -131,45 +112,63 @@ export default function index() {
       key: "hotelModifiedDate",
     },
     {
-      title: "Aksi",
+      title: (
+        <>
+          <Button
+            className="mt-5 px-4 py-1 bg-green-500 mb-5 w-16"
+            type="primary"
+            onClick={() => setModal2Open(true)}
+          >
+            <PlusOutlined className="text-white" />
+          </Button>
+        </>
+      ),
       key: "action",
       render: (_: any, record: { hotelId: any }) => (
-        <Select defaultValue={record} className="w-32">
-          <Select.Option>
-            <Button
-              className="w-24 text-yellow-500 text-sm hover:text-green-400"
-              type="primary"
-              onClick={() => showEdit(record.hotelId)}
-            >
-              <EditOutlined />
-              update
-            </Button>
-          </Select.Option>
-          <Select.Option>
-            <Button
-              onClick={() => showDeleteConfirm(record.hotelId)}
-              type="primary"
-              className="w-24 text-red-500 text-sm hover:text-green-400"
-            >
-              <DeleteOutlined />
-              delete
-            </Button>
-          </Select.Option>
-          <Select.Option>
-            <Button
-              className="h-10w-24 text-blue-500 text-sm hover:text-green-400 "
-              type="primary"
-              onClick={() => showFaci(record.hotelId)}
-            >
-              <MenuOutlined />
-              Facility
-            </Button>
-          </Select.Option>
-        </Select>
+        <>
+          <button
+            onClick={() => toggleDropdown(record.hotelId)}
+            className="px-4 py-1 bg-blue-300 rounded-md w-16"
+          >
+            <MenuFoldOutlined className="text-white" />
+          </button>
+          <div className="absolute">
+            {dropdowns[record.hotelId] && (
+              <ul className="absolute right-0 bottom-full z-10 bg-white border rounded-lg shadow-lg mt-2 ">
+                <li className="py-2 px-2 hover:bg-gray-100 flex justify-center">
+                  <button
+                    className="text-yellow-500 text-sm hover:text-green-400 flex items-center justify-center space-x-2"
+                    onClick={() => showEdit(record.hotelId)}
+                  >
+                    <EditOutlined />
+                    <p>Update</p>
+                  </button>
+                </li>
+                <li className="py-2 px-2 hover:bg-gray-100 flex justify-center">
+                  <button
+                    onClick={() => showDeleteConfirm(record.hotelId)}
+                    className="text-red-500 text-sm hover:text-green-400 flex items-center justify-center space-x-2"
+                  >
+                    <DeleteOutlined />
+                    <p>Delete</p>
+                  </button>
+                </li>
+                <li className="py-2 px-2 hover:bg-gray-100 flex justify-center">
+                  <button
+                    className="text-blue-500 text-sm hover:text-green-400 flex items-center justify-center space-x-2"
+                    onClick={() => showFaci(record.hotelId)}
+                  >
+                    <MenuOutlined />
+                    <p>Facility</p>
+                  </button>
+                </li>
+              </ul>
+            )}
+          </div>
+        </>
       ),
     },
   ];
-
   // value input
 
   const [valueHotel, setValueHotel] = useState({
@@ -177,7 +176,7 @@ export default function index() {
     hotelAddr: 0,
     hotelDescription: "",
     hotelRatingStar: 0,
-    hotelPhonenumber: "",
+    hotelPhonenumber: "+62 ",
     hotelModifiedDate: new Date().toISOString().substr(0, 10),
   });
   const eventHandler =
@@ -185,12 +184,55 @@ export default function index() {
     (event) => {
       setValueHotel({ ...valueHotel, [item]: event.target.value });
     };
+
   // end
   // button insert data hotel
+  const [showError, setShowError] = useState({
+    hotelName: false,
+    hotelAddr: false,
+    hotelDescription: false,
+    hotelRatingStar: false,
+    hotelPhonenumber: false,
+  });
+  const [messageError, setMessageError] = useState({
+    hotelName: "",
+    hotelAddr: "",
+    hotelDescription: "",
+    hotelRatingStar: "",
+    hotelPhonenumber: "",
+  });
   const addData = (e: any) => {
     e.preventDefault();
+    if (valueHotel.hotelName === "") {
+      setShowError({ ...showError, hotelName: true });
+      setMessageError({
+        ...messageError,
+        hotelName: "hotel name must be filled!",
+      });
+      return;
+    }
+    if (valueHotel.hotelAddr === 0) {
+      setShowError({ ...showError, hotelAddr: true });
+      setMessageError({ ...messageError, hotelAddr: "adrees must be filled!" });
+      return;
+    }
+    if (valueHotel.hotelDescription === "") {
+      setShowError({ ...showError, hotelDescription: true });
+      setMessageError({
+        ...messageError,
+        hotelDescription: "deskription must be filled!",
+      });
+      return;
+    }
+    if (valueHotel.hotelPhonenumber === "") {
+      setShowError({ ...showError, hotelPhonenumber: true });
+      setMessageError({
+        ...messageError,
+        hotelPhonenumber: "phonenumber must be filled!",
+      });
+      return;
+    }
     dispatch(doInsertHotel(valueHotel));
-
     setModal2Open(false);
     setVisible("");
     setTimeout(() => {
@@ -222,7 +264,10 @@ export default function index() {
       </option>
     ));
 
-  // search tabel
+  useEffect(() => {
+    dispatch(doHotelAdminReq());
+    dispatch(doAddrSearchReq());
+  }, [setValueHotel]);
   return (
     <div className="w-3/4 mx-auto text-center">
       <Alert
@@ -235,16 +280,11 @@ export default function index() {
         afterClose={() => setVisible("")}
         className={visible}
       />
-      <div className="flex justify-end">
+      <div className="flex justify-between mb-5 mt-5">
+        <span className="text-4xl">Hotels</span>
+        <hr />
         {/* modal add data */}
         <>
-          <Button
-            className="bg-red-500 mb-5 w-32"
-            type="primary"
-            onClick={() => setModal2Open(true)}
-          >
-            Add
-          </Button>
           <Modal
             title="Add Hotel"
             centered
@@ -254,7 +294,17 @@ export default function index() {
             footer={null}
           >
             <Form layout="vertical" className="bg-white p-6 rounded-lg mx-auto">
-              <Form.Item label="hotelName">
+              <Form.Item
+                label="hotelName"
+                validateStatus={
+                  valueHotel.hotelName === "" && showError.hotelName
+                    ? "error"
+                    : ""
+                }
+                help={
+                  valueHotel.hotelName === "" ? messageError.hotelName : null
+                }
+              >
                 <Input
                   placeholder=""
                   value={valueHotel.hotelName}
@@ -272,14 +322,24 @@ export default function index() {
                   />
                 </div>
               </Form.Item>
-              <Form.Item label="Address">
+              <Form.Item
+                label="Address"
+                validateStatus={
+                  valueHotel.hotelAddr === 0 && showError.hotelAddr
+                    ? "error"
+                    : ""
+                }
+                help={
+                  valueHotel.hotelAddr === 0 ? messageError.hotelAddr : null
+                }
+              >
                 <select
                   value={valueHotel.hotelAddr}
                   onChange={handleSelect}
                   className="h-20 border border-solid border-gray-500 w-11/12"
                 >
-                  {searchResults}
                   <option value="">-pilih address-</option>
+                  {searchResults}
                 </select>
               </Form.Item>
               <Form.Item label="hotelRatingStar">
@@ -293,7 +353,20 @@ export default function index() {
                   className="w-1/4"
                 />
               </Form.Item>
-              <Form.Item label="hotelPhonenumber">
+              <Form.Item
+                label="hotelPhonenumber"
+                validateStatus={
+                  valueHotel.hotelPhonenumber === "" &&
+                  showError.hotelPhonenumber
+                    ? "error"
+                    : ""
+                }
+                help={
+                  valueHotel.hotelPhonenumber === ""
+                    ? messageError.hotelPhonenumber
+                    : null
+                }
+              >
                 <Input
                   placeholder=""
                   value={valueHotel.hotelPhonenumber}
@@ -301,7 +374,20 @@ export default function index() {
                   type="text"
                 />
               </Form.Item>
-              <Form.Item label="hotelDescription">
+              <Form.Item
+                label="hotelDescription"
+                validateStatus={
+                  valueHotel.hotelDescription === "" &&
+                  showError.hotelDescription
+                    ? "error"
+                    : ""
+                }
+                help={
+                  valueHotel.hotelDescription === ""
+                    ? messageError.hotelDescription
+                    : null
+                }
+              >
                 <TextArea
                   placeholder=""
                   value={valueHotel.hotelDescription}
@@ -339,6 +425,7 @@ export default function index() {
       </div>
       <div>
         <Table
+          className="flex items-center"
           scroll={{ x: true }}
           size="small"
           dataSource={dataHotel}
