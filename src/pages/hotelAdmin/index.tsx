@@ -282,12 +282,12 @@ export default function index() {
         className={visible}
       />
       <div className="flex justify-start mb-5 mt-5 py-5">
-        <span className="text-4xl">
+        <span className="text-4xl font bold">
           <FaHotel />
         </span>
-        <span className="text-4xl ml-3">Hotels</span>
-        <hr />
+        <span className="text-4xl ml-3 font-bold">Hotels</span>
       </div>
+      <hr className="text-gray-600 font-bold py-4" />
       {/* modal add data */}
       <>
         <Modal
