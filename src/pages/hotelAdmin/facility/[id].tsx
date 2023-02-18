@@ -51,23 +51,8 @@ export default function Faci() {
     dispatch(doMaxRoomIdReq());
     dispatch(doHotelAdminReq());
   }, []);
-
-  const [hotelId, setHotelId] = useState<{
-    hotelId: number;
-    hotelName: string;
-  } | null>(null);
-  const [namaHotel, setNamaHotel] = useState("");
-
-  // use effect get data hotel
-  useEffect(() => {
-    const dataHotelOne = dataHotel.find((items: any) => items.hotelId == id);
-    setHotelId(dataHotelOne);
-  }, [dataHotel]);
-  useEffect(() => {
-    if (hotelId) {
-      setNamaHotel(hotelId.hotelName);
-    }
-  }, [hotelId]);
+  // data hotel one
+  const dataHotelOne = dataHotel?.find((items: any) => items.hotelId == id);
 
   // dropdown
   const [dropdowns, setDropdowns] = useState(
@@ -236,85 +221,29 @@ export default function Faci() {
   // tambah data faci
 
   const [form] = Form.useForm();
-
-  // validasi from input room number
+  // data room number
   const IdRoom = useSelector(
     (state: any) => state.RoomNumberReducer.RoomNumber
   );
-  //   data resto
-  const [data1, setData1] = useState({
-    faci_cagro_id: 0,
-    max_roomid: "",
-  });
-  // data room
-  const [data2, setData2] = useState({
-    faci_cagro_id: 0,
-    max_roomid: "",
-  });
-  //   meeting room
-  const [data3, setData3] = useState({
-    faci_cagro_id: 0,
-    max_roomid: "",
-  });
-  //   gym
-  const [data4, setData4] = useState({
-    faci_cagro_id: 0,
-    max_roomid: "",
-  });
-
-  const [resto, setResto] = useState();
-  const [room, setRoom] = useState();
-  const [meetRoom, setMeetRoom] = useState();
-  const [gym, setGym] = useState();
-  useEffect(() => {
-    const result1 = IdRoom.find((item: any) => item.faci_cagro_id == 1);
-    setResto(result1);
-    const result2 = IdRoom.find((item: any) => item.faci_cagro_id == 2);
-    setRoom(result2);
-    const result3 = IdRoom.find((item: any) => item.faci_cagro_id == 3);
-    setMeetRoom(result3);
-    const result4 = IdRoom.find((item: any) => item.faci_cagro_id == 4);
-    setGym(result4);
-  }, [IdRoom]);
-
-  useEffect(() => {
-    if (resto) {
-      setData1(resto);
-    }
-  }, [resto]);
-
-  useEffect(() => {
-    if (room) {
-      setData2(room);
-    }
-  }, [room]);
-
-  useEffect(() => {
-    if (meetRoom) {
-      setData3(meetRoom);
-    }
-  }, [meetRoom]);
-  useEffect(() => {
-    if (gym) {
-      setData4(gym);
-    }
-  }, [gym]);
-
+  const result1 = IdRoom?.find((item: any) => item.faci_cagro_id == 1);
+  const result2 = IdRoom?.find((item: any) => item.faci_cagro_id == 2);
+  const result3 = IdRoom?.find((item: any) => item.faci_cagro_id == 3);
+  const result4 = IdRoom?.find((item: any) => item.faci_cagro_id == 4);
   // room
-  let room2 = data2.max_roomid;
-  let counter = parseInt(room2.slice(1));
+  let room2 = result2?.max_roomid;
+  let counter = parseInt(room2?.slice(1));
   let hasil2 = "R" + (counter + 1).toString().padStart(4, "0");
   //   resto
-  let resto1 = data1.max_roomid;
-  let counter1 = parseInt(resto1.slice(2));
+  let resto1 = result1?.max_roomid;
+  let counter1 = parseInt(resto1?.slice(2));
   let hasil1 = "RT" + (counter1 + 1).toString().padStart(4, "0");
   //   meet room
-  let mr3 = data3.max_roomid;
-  let counter3 = parseInt(mr3.slice(2));
+  let mr3 = result3?.max_roomid;
+  let counter3 = parseInt(mr3?.slice(2));
   let hasil3 = "MR" + (counter3 + 1).toString().padStart(4, "0");
   //   gym
-  let g4 = data4.max_roomid;
-  let counter4 = parseInt(g4.slice(1));
+  let g4 = result4?.max_roomid;
+  let counter4 = parseInt(g4?.slice(1));
   let hasil4 = "G" + (counter4 + 1).toString().padStart(4, "0");
 
   //   add faci hotel
@@ -328,7 +257,7 @@ export default function Faci() {
     faciEndate: "",
     faciLowPrice: "",
     faciHightPrice: "",
-    faciRatePrice: "",
+    faciRatePrice: "0",
     faciDiscount: "",
     faciTaxRate: "",
     faciModifiedDate: new Date().toISOString().substr(0, 10),
@@ -362,6 +291,21 @@ export default function Faci() {
       setDataFaci({ ...dataFaci, faciRoomNumber: hasil4 });
     }
   }, [dataFaci.faciCagro, id]);
+
+  // use effect membuat faci discount
+  // diskon
+  const [disc, setDisc] = useState(0);
+  function handlerDisc(event: any) {
+    setDisc(event.target.value);
+  }
+  // end
+  let hightPrice = dataFaci.faciRatePrice;
+  let IntHp = parseInt(hightPrice);
+  useEffect(() => {
+    let totDiscount = IntHp * (disc / 100);
+    let hasilDiscount = totDiscount.toString();
+    setDataFaci({ ...dataFaci, faciDiscount: hasilDiscount });
+  }, [dataFaci.faciRatePrice, disc]);
 
   // button insert data hotel
   // message require
@@ -461,6 +405,22 @@ export default function Faci() {
       });
       return;
     }
+    if (dataFaci.faciLowPrice === "") {
+      setShowError({ ...showError, faciLowPrice: true });
+      setMessageError({
+        ...messageError,
+        faciLowPrice: "faci hight price date unit must be filled!",
+      });
+      return;
+    }
+    if (dataFaci.faciRatePrice === "") {
+      setShowError({ ...showError, faciRatePrice: true });
+      setMessageError({
+        ...messageError,
+        faciRatePrice: "faci hight price date unit must be filled!",
+      });
+      return;
+    }
 
     dispatch(doInsertFaci(dataFaci));
     setModal2Open(false);
@@ -470,7 +430,6 @@ export default function Faci() {
       setVisible("hidden");
     }, 2000);
   };
-  // end
   // alert
   const [visible, setVisible] = useState("hidden");
 
@@ -518,7 +477,9 @@ export default function Faci() {
         <span className="text-4xl font-bold">
           <IoIosBed />
         </span>
-        <span className="text-4xl font-bold ml-3">{namaHotel}</span>
+        <span className="text-4xl font-bold ml-3">
+          {dataHotelOne?.hotelName}
+        </span>
       </div>
       <hr className="text-gray-600 font-bold py-4" />
 
@@ -721,9 +682,72 @@ export default function Faci() {
                 >
                   <Input
                     placeholder=""
-                    type="text"
+                    type="number"
                     value={dataFaci.faciHightPrice}
                     onChange={eventHandler("faciHightPrice")}
+                    suffix="$"
+                    min={0}
+                  />
+                </Form.Item>
+                <Form.Item
+                  className=""
+                  label="faci_low_price"
+                  name="faciLowPrice"
+                  rules={[{ required: true }]}
+                  validateStatus={
+                    dataFaci.faciLowPrice === "" && showError.faciLowPrice
+                      ? "error"
+                      : ""
+                  }
+                  help={
+                    dataFaci.faciLowPrice === ""
+                      ? messageError.faciLowPrice
+                      : null
+                  }
+                >
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={dataFaci.faciLowPrice}
+                    onChange={eventHandler("faciLowPrice")}
+                    suffix="$"
+                    min={0}
+                  />
+                </Form.Item>
+                <Form.Item
+                  className=""
+                  label="faci_rate_price"
+                  name="faciRatePrice"
+                  rules={[{ required: true }]}
+                  validateStatus={
+                    dataFaci.faciRatePrice === "" && showError.faciRatePrice
+                      ? "error"
+                      : ""
+                  }
+                  help={
+                    dataFaci.faciRatePrice === ""
+                      ? messageError.faciRatePrice
+                      : null
+                  }
+                >
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={dataFaci.faciRatePrice}
+                    onChange={eventHandler("faciRatePrice")}
+                    suffix="$"
+                    min={0}
+                  />
+                </Form.Item>
+                <Form.Item className="" label="discount">
+                  <Input
+                    type="number"
+                    value={disc}
+                    onChange={handlerDisc}
+                    className="w-2/5"
+                    suffix="%"
+                    min={0}
+                    max={100}
                   />
                 </Form.Item>
                 <Form.Item className="" label="faci_discount">
@@ -732,34 +756,19 @@ export default function Faci() {
                     type="text"
                     value={dataFaci.faciDiscount}
                     onChange={eventHandler("faciDiscount")}
-                  />
-                </Form.Item>
-                <Form.Item className="" label="faci_low_price">
-                  <Input
-                    placeholder=""
-                    type="text"
-                    value={dataFaci.faciLowPrice}
-                    onChange={eventHandler("faciLowPrice")}
                     readOnly
-                    className="bg-gray-100"
-                  />
-                </Form.Item>
-                <Form.Item className="" label="faci_rate_price">
-                  <Input
-                    placeholder=""
-                    type="text"
-                    value={dataFaci.faciRatePrice}
-                    onChange={eventHandler("faciRatePrice")}
-                    readOnly
-                    className="bg-gray-100"
+                    className="bg-gray-100 font-bold text-gray-500"
+                    suffix="$"
                   />
                 </Form.Item>
                 <Form.Item className="" label="faci_tax_rate">
                   <Input
                     placeholder=""
-                    type="text"
+                    type="number"
                     value={dataFaci.faciTaxRate}
                     onChange={eventHandler("faciTaxRate")}
+                    suffix="$"
+                    min={0}
                   />
                 </Form.Item>
 
