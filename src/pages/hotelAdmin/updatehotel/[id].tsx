@@ -73,22 +73,20 @@ export default function udatehotel() {
       : null;
   // end
   return (
-    <div className="w-3/4 mx-auto text-center">
+    <div className="w-3/4 mx-auto text-center mt-5 mb-5">
+      <div className="text-2xl flex justify-start mt-5 mb-5">
+        <span>Edit data Hotel</span>
+      </div>
       {/* form */}
       <Form
-        {...formItemLayout}
-        layout={formLayout}
-        form={form}
+        // {...formItemLayout}
+        layout="vertical"
+        // form={form}
         initialValues={{ layout: formLayout }}
         onValuesChange={onFormLayoutChange}
         style={{ maxWidth: 600 }}
+        className="bg-white px-5 py-5"
       >
-        <Form.Item label="Form Layout" name="layout">
-          <Radio.Group value={formLayout}>
-            <Radio.Button value="horizontal">Horizontal</Radio.Button>
-            <Radio.Button value="vertical">Vertical</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
         <Form.Item label="hotelName">
           <Input
             placeholder=""
@@ -129,7 +127,7 @@ export default function udatehotel() {
             onChange={eventHandler("hotelModifiedDate")}
           />
         </Form.Item>
-        <Form.Item {...buttonItemLayout}>
+        <Form.Item className="flex justify-end">
           <Button onClick={updateData} type="primary" className="bg-red-500">
             Submit
           </Button>

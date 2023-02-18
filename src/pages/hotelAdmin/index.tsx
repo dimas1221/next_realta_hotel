@@ -18,6 +18,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
+import { FaHotel } from "react-icons/fa";
 
 export default function index() {
   const dispatch = useDispatch();
@@ -280,152 +281,155 @@ export default function index() {
         afterClose={() => setVisible("")}
         className={visible}
       />
-      <div className="flex justify-between mb-5 mt-5">
-        <span className="text-4xl">Hotels</span>
+      <div className="flex justify-start mb-5 mt-5 py-5">
+        <span className="text-4xl">
+          <FaHotel />
+        </span>
+        <span className="text-4xl ml-3">Hotels</span>
         <hr />
-        {/* modal add data */}
-        <>
-          <Modal
-            title="Add Hotel"
-            centered
-            open={modal2Open}
-            onOk={() => setModal2Open(false)}
-            onCancel={() => setModal2Open(false)}
-            footer={null}
-          >
-            <Form layout="vertical" className="bg-white p-6 rounded-lg mx-auto">
-              <Form.Item
-                label="hotelName"
-                validateStatus={
-                  valueHotel.hotelName === "" && showError.hotelName
-                    ? "error"
-                    : ""
-                }
-                help={
-                  valueHotel.hotelName === "" ? messageError.hotelName : null
-                }
-              >
+      </div>
+      {/* modal add data */}
+      <>
+        <Modal
+          title="Add Hotel"
+          centered
+          open={modal2Open}
+          onOk={() => setModal2Open(false)}
+          onCancel={() => setModal2Open(false)}
+          footer={null}
+        >
+          <Form layout="vertical" className="bg-white p-6 rounded-lg mx-auto">
+            <Form.Item
+              label="hotelName"
+              name="hotelName"
+              rules={[{ required: true }]}
+              validateStatus={
+                valueHotel.hotelName === "" && showError.hotelName
+                  ? "error"
+                  : ""
+              }
+              help={valueHotel.hotelName === "" ? messageError.hotelName : null}
+            >
+              <Input
+                placeholder=""
+                value={valueHotel.hotelName}
+                onChange={eventHandler("hotelName")}
+              />
+            </Form.Item>
+            <Form.Item label="search address">
+              <div className="flex">
+                <SearchOutlined className="text-xl bg-blue-500 rounded w-10 text-white mr-2" />
                 <Input
-                  placeholder=""
-                  value={valueHotel.hotelName}
-                  onChange={eventHandler("hotelName")}
-                />
-              </Form.Item>
-              <Form.Item label="search address">
-                <div className="flex">
-                  <SearchOutlined className="text-xl bg-blue-500 rounded w-10 text-white mr-2" />
-                  <Input
-                    type="search"
-                    value={query}
-                    onChange={handleSearch}
-                    className="w-1/4"
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item
-                label="Address"
-                validateStatus={
-                  valueHotel.hotelAddr === 0 && showError.hotelAddr
-                    ? "error"
-                    : ""
-                }
-                help={
-                  valueHotel.hotelAddr === 0 ? messageError.hotelAddr : null
-                }
-              >
-                <select
-                  value={valueHotel.hotelAddr}
-                  onChange={handleSelect}
-                  className="h-20 border border-solid border-gray-500 w-11/12"
-                >
-                  <option value="">-pilih address-</option>
-                  {searchResults}
-                </select>
-              </Form.Item>
-              <Form.Item label="hotelRatingStar">
-                <Input
-                  placeholder=""
-                  type="number"
-                  min={1}
-                  max={5}
-                  value={valueHotel.hotelRatingStar}
-                  onChange={eventHandler("hotelRatingStar")}
+                  type="search"
+                  value={query}
+                  onChange={handleSearch}
                   className="w-1/4"
                 />
-              </Form.Item>
-              <Form.Item
-                label="hotelPhonenumber"
-                validateStatus={
-                  valueHotel.hotelPhonenumber === "" &&
-                  showError.hotelPhonenumber
-                    ? "error"
-                    : ""
-                }
-                help={
-                  valueHotel.hotelPhonenumber === ""
-                    ? messageError.hotelPhonenumber
-                    : null
-                }
+              </div>
+            </Form.Item>
+            <Form.Item
+              label="Address"
+              name="Address"
+              rules={[{ required: true }]}
+              validateStatus={
+                valueHotel.hotelAddr === 0 && showError.hotelAddr ? "error" : ""
+              }
+              help={valueHotel.hotelAddr === 0 ? messageError.hotelAddr : null}
+            >
+              <select
+                value={valueHotel.hotelAddr}
+                onChange={handleSelect}
+                className="h-20 border border-solid border-gray-500 w-11/12"
               >
-                <Input
-                  placeholder=""
-                  value={valueHotel.hotelPhonenumber}
-                  onChange={eventHandler("hotelPhonenumber")}
-                  type="text"
-                />
-              </Form.Item>
-              <Form.Item
-                label="hotelDescription"
-                validateStatus={
-                  valueHotel.hotelDescription === "" &&
-                  showError.hotelDescription
-                    ? "error"
-                    : ""
-                }
-                help={
-                  valueHotel.hotelDescription === ""
-                    ? messageError.hotelDescription
-                    : null
-                }
-              >
-                <TextArea
-                  placeholder=""
-                  value={valueHotel.hotelDescription}
-                  onChange={eventHandler("hotelDescription")}
-                />
-              </Form.Item>
-              <Form.Item className="items-center">
-                <Button type="primary" className="bg-red-500" onClick={addData}>
-                  Submit
-                </Button>
-              </Form.Item>
-              <Form.Item>
-                <Input
-                  placeholder="input placeholder"
-                  value={valueHotel.hotelModifiedDate}
-                  onChange={eventHandler("hotelModifiedDate")}
-                  hidden
-                  type="date"
-                />
-              </Form.Item>
-              <Form.Item>
-                <Input
-                  type="number"
-                  placeholder=""
-                  value={valueHotel.hotelAddr}
-                  onChange={eventHandler("hotelAddr")}
-                  hidden
-                />
-              </Form.Item>
-            </Form>
-            {/* end */}
-          </Modal>
-        </>
-        {/* end */}
-      </div>
+                <option value="">-pilih address-</option>
+                {searchResults}
+              </select>
+            </Form.Item>
+            <Form.Item label="hotelRatingStar">
+              <Input
+                placeholder=""
+                type="number"
+                min={1}
+                max={5}
+                value={valueHotel.hotelRatingStar}
+                onChange={eventHandler("hotelRatingStar")}
+                className="w-1/4"
+              />
+            </Form.Item>
+            <Form.Item
+              label="hotelPhonenumber"
+              name="hotelPhonenumber"
+              rules={[{ required: true }]}
+              validateStatus={
+                valueHotel.hotelPhonenumber === "" && showError.hotelPhonenumber
+                  ? "error"
+                  : ""
+              }
+              help={
+                valueHotel.hotelPhonenumber === ""
+                  ? messageError.hotelPhonenumber
+                  : null
+              }
+            >
+              <Input
+                placeholder=""
+                value={valueHotel.hotelPhonenumber}
+                onChange={eventHandler("hotelPhonenumber")}
+                type="text"
+              />
+            </Form.Item>
+            <Form.Item
+              label="hotelDescription"
+              name="hotelDeskription"
+              rules={[{ required: true }]}
+              validateStatus={
+                valueHotel.hotelDescription === "" && showError.hotelDescription
+                  ? "error"
+                  : ""
+              }
+              help={
+                valueHotel.hotelDescription === ""
+                  ? messageError.hotelDescription
+                  : null
+              }
+            >
+              <TextArea
+                placeholder=""
+                value={valueHotel.hotelDescription}
+                onChange={eventHandler("hotelDescription")}
+              />
+            </Form.Item>
+            <Form.Item className="items-center">
+              <Button type="primary" className="bg-red-500" onClick={addData}>
+                Submit
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <Input
+                placeholder="input placeholder"
+                value={valueHotel.hotelModifiedDate}
+                onChange={eventHandler("hotelModifiedDate")}
+                hidden
+                type="date"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Input
+                type="number"
+                placeholder=""
+                value={valueHotel.hotelAddr}
+                onChange={eventHandler("hotelAddr")}
+                hidden
+              />
+            </Form.Item>
+          </Form>
+          {/* end */}
+        </Modal>
+      </>
+      {/* end */}
+
       <div>
         <Table
-          className="flex items-center"
           scroll={{ x: true }}
           size="small"
           dataSource={dataHotel}
