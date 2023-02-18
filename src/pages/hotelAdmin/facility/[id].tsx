@@ -178,7 +178,10 @@ export default function Faci() {
             {dropdowns[record.faci_id] && (
               <ul className="absolute right-0 bottom-full z-10 bg-white border rounded-lg shadow-lg mt-2 ">
                 <li className="py-2 px-2 hover:bg-gray-100 flex px-1">
-                  <button className="text-yellow-500 text-sm hover:text-green-400 flex items-center px-1 space-x-2">
+                  <button
+                    className="text-yellow-500 text-sm hover:text-green-400 flex items-center justify-center space-x-2"
+                    onClick={() => showEdit(record.faci_id)}
+                  >
                     <EditOutlined />
                     <p>Update</p>
                   </button>
@@ -423,14 +426,20 @@ export default function Faci() {
     }
 
     dispatch(doInsertFaci(dataFaci));
+    dispatch(doFaciAdminReq());
     setModal2Open(false);
 
     setVisible("");
     setTimeout(() => {
       setVisible("hidden");
-    }, 2000);
+    }, 1300);
   };
-  // alert
+  // buuton edit
+  const showEdit = (id: any) => {
+    // navigate('/editcust', {state:{id}})
+    router.push("updateFaci/" + id);
+  };
+  // alert succes add data
   const [visible, setVisible] = useState("hidden");
 
   // modal delete
