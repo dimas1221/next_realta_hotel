@@ -9,6 +9,7 @@ import {
   Form,
   Input,
   Modal,
+  Rate,
   Row,
   Select,
   Table,
@@ -21,12 +22,14 @@ import {
   ExclamationCircleFilled,
   MenuFoldOutlined,
   PlusOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
 import { HiPhoto } from "react-icons/hi2";
 import { GoHistory } from "react-icons/go";
 import { doHotelAdminReq } from "@/redux/action/actionHotelAdmin";
 import { IoIosBed } from "react-icons/io";
+import dayjs from "dayjs";
 
 export default function Faci() {
   const router = useRouter();
@@ -45,14 +48,19 @@ export default function Faci() {
   const dataHotel = useSelector(
     (state: any) => state.HotelAdminReducer.hotelAdmin
   );
+  // data hotel one
+  const dataHotelOne = dataHotel?.find((items: any) => items.hotelId == id);
+  // addr reducer
+  const dataAddr = useSelector(
+    (state: any) => state.AddrHotelReducer.HotelAddr
+  );
+  const dataAddrById = dataAddr?.find((temp: any) => temp.hotel_addr_id == id);
 
   useEffect(() => {
     dispatch(doFaciAdminReq());
     dispatch(doMaxRoomIdReq());
     dispatch(doHotelAdminReq());
   }, []);
-  // data hotel one
-  const dataHotelOne = dataHotel?.find((items: any) => items.hotelId == id);
 
   // dropdown
   const [dropdowns, setDropdowns] = useState(
@@ -470,6 +478,15 @@ export default function Faci() {
     router.push("faciPriceHistory/" + id);
   };
   // end
+  // search faci name
+  const [queryFaci, setQueryFaci] = useState("");
+  const handleSearchFaci = (e: any) => {
+    const input = e.target.value.toLowerCase().replace(/\s/g, "");
+    setQueryFaci(input);
+  };
+  const searchResultsFaci = faciOne.filter((item: any) =>
+    item.faci_name.toLowerCase().replace(/\s/g, "").includes(queryFaci)
+  );
   return (
     <div className="w-3/4 mx-auto text-center">
       <Alert
@@ -482,16 +499,45 @@ export default function Faci() {
         afterClose={() => setVisible("")}
         className={visible}
       />
-      <div className="flex justify-start py-5">
-        <span className="text-4xl font-bold">
-          <IoIosBed />
-        </span>
-        <span className="text-4xl font-bold ml-3">
-          {dataHotelOne?.hotelName}
-        </span>
+      <div className="flex justify-between mt-2">
+        <div className="flex justify-start">
+          <span className="text-4xl font-bold">
+            <IoIosBed />
+          </span>
+          <div>
+            <span className="text-4xl font-bold ml-3">
+              {dataHotelOne?.hotelName}
+            </span>
+          </div>
+        </div>
+        <div className="">
+          <span className="text-base text-gray-700 font-bold">
+            {dayjs(dataHotelOne?.hotelModifiedDate).format(
+              "DD MMMM YYYY hh:mm:ss"
+            )}
+          </span>
+          <p className="flex justify-start">
+            <Rate disabled defaultValue={dataHotelOne?.hotelRatingStar} />
+          </p>
+        </div>
       </div>
+      <p className="flex justify-start text-base text-gray-400 font-bold">
+        {dataAddrById?.place}
+      </p>
       <hr className="text-gray-600 font-bold py-4" />
-
+      <div className="flex justify-between">
+        <span className="text-base text-gray-700 font-bold mt-5">Facility</span>
+        <Form.Item label="">
+          <Input
+            placeholder="search by faci name"
+            type="search"
+            value={queryFaci}
+            onChange={handleSearchFaci}
+            className="w-full"
+            suffix={<SearchOutlined className="text-xl text-blue-500 mb-2" />}
+          />
+        </Form.Item>
+      </div>
       {/* modal add data */}
       <>
         <Modal
@@ -817,7 +863,7 @@ export default function Faci() {
       <Table
         scroll={{ x: true }}
         size="small"
-        dataSource={faciOne}
+        dataSource={searchResultsFaci}
         columns={columns}
       />
     </div>

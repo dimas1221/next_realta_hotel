@@ -27,9 +27,8 @@ export default function index() {
   let dataHotel = useSelector(
     (state: any) => state.HotelAdminReducer.hotelAdmin
   );
-  console.log("object", dataHotel);
+
   let dataAddr = useSelector((state: any) => state.AddrHotelReducer.HotelAddr);
-  console.log("add", dataAddr);
 
   // modalinsert
   const [modal2Open, setModal2Open] = useState(false);
@@ -243,7 +242,7 @@ export default function index() {
   // alert
   const [visible, setVisible] = useState("hidden");
   // end
-
+  // search addrs
   const [query, setQuery] = useState("");
   const handleSearch = (e: any) => {
     // setQuery(e.target.value);
@@ -265,10 +264,21 @@ export default function index() {
       </option>
     ));
 
+  // search hotel name
+  const [queryHotel, setQueryHotel] = useState("");
+  const handleSearchHotel = (e: any) => {
+    const input = e.target.value.toLowerCase().replace(/\s/g, "");
+    setQueryHotel(input);
+  };
+  const searchResultsHotel = dataHotel.filter((item: any) =>
+    item.hotelName.toLowerCase().replace(/\s/g, "").includes(queryHotel)
+  );
+
   useEffect(() => {
     dispatch(doHotelAdminReq());
     dispatch(doAddrSearchReq());
   }, []);
+
   return (
     <div className="w-3/4 mx-auto text-center">
       <Alert
@@ -281,13 +291,29 @@ export default function index() {
         afterClose={() => setVisible("")}
         className={visible}
       />
-      <div className="flex justify-start mb-5 mt-5 py-5">
-        <span className="text-4xl font bold">
-          <FaHotel />
-        </span>
-        <span className="text-4xl ml-3 font-bold">Hotels</span>
+      <div className="flex justify-between">
+        <div className="flex justify-start">
+          <span className="text-4xl font bold">
+            <FaHotel />
+          </span>
+          <span className="text-4xl ml-3 font-bold">Hotels</span>
+        </div>
+        <div className="">
+          <Form.Item label="">
+            <Input
+              placeholder="search by hotel name"
+              type="search"
+              value={queryHotel}
+              onChange={handleSearchHotel}
+              className="w-full"
+              suffix={
+                <SearchOutlined className="text-2xl text-blue-500 mb-2" />
+              }
+            />
+          </Form.Item>
+        </div>
       </div>
-      <hr className="text-gray-600 font-bold py-4" />
+      <hr className="text-gray-600 font-bold py-2" />
       {/* modal add data */}
       <>
         <Modal
@@ -297,6 +323,7 @@ export default function index() {
           onOk={() => setModal2Open(false)}
           onCancel={() => setModal2Open(false)}
           footer={null}
+          width={500}
         >
           <Form layout="vertical" className="bg-white p-6 rounded-lg mx-auto">
             <Form.Item
@@ -317,15 +344,15 @@ export default function index() {
               />
             </Form.Item>
             <Form.Item label="search address">
-              <div className="flex">
-                <SearchOutlined className="text-xl bg-blue-500 rounded w-10 text-white mr-2" />
-                <Input
-                  type="search"
-                  value={query}
-                  onChange={handleSearch}
-                  className="w-1/4"
-                />
-              </div>
+              <Input
+                type="search"
+                value={query}
+                onChange={handleSearch}
+                className="w-2/4"
+                suffix={
+                  <SearchOutlined className="text-sm text-blue-500 mb-1" />
+                }
+              />
             </Form.Item>
             <Form.Item
               label="Address"
@@ -341,8 +368,8 @@ export default function index() {
                 onChange={handleSelect}
                 className="h-20 border border-solid border-gray-500 w-11/12"
               >
-                <option value="">-pilih address-</option>
                 {searchResults}
+                <option value="">-pilih address-</option>
               </select>
             </Form.Item>
             <Form.Item label="hotelRatingStar">
@@ -399,19 +426,20 @@ export default function index() {
                 onChange={eventHandler("hotelDescription")}
               />
             </Form.Item>
-            <Form.Item className="items-center">
-              <Button type="primary" className="bg-red-500" onClick={addData}>
-                Submit
-              </Button>
-            </Form.Item>
-            <Form.Item>
+            <Form.Item label="hotelModifiedDate">
               <Input
                 placeholder="input placeholder"
                 value={valueHotel.hotelModifiedDate}
                 onChange={eventHandler("hotelModifiedDate")}
-                hidden
+                readOnly
                 type="date"
+                className="bg-gray-100 font-bold text-gray-500"
               />
+            </Form.Item>
+            <Form.Item className="items-center">
+              <Button type="primary" className="bg-red-500" onClick={addData}>
+                Submit
+              </Button>
             </Form.Item>
             <Form.Item>
               <Input
@@ -432,7 +460,7 @@ export default function index() {
         <Table
           scroll={{ x: true }}
           size="small"
-          dataSource={dataHotel}
+          dataSource={searchResultsHotel}
           columns={columns}
         />
       </div>

@@ -33,6 +33,7 @@
     "@types/styled-components": "^5.1.26",
     "antd": "^5.2.1",
     "axios": "^1.2.5",
+    "dayjs": "^1.11.7",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "formik": "^2.2.9",
