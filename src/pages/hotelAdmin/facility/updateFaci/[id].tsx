@@ -1,4 +1,4 @@
-import { doFaciAdminReq } from "@/redux/action/actionFaciAdmin";
+import { doFaciAdminReq, doUpdateFaci } from "@/redux/action/actionFaciAdmin";
 import { Button, Col, Form, Input, Row, Select } from "antd";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -13,12 +13,12 @@ export default function index() {
   const faci_hotel_id = useSelector(
     (state: any) => state.FaciAdminReducer.faciAdmin
   );
-  //   const faciOne = faci_hotel_id?.find((item: any) => item.faci_id == id);
-  useEffect(() => {
-    dispatch(doFaciAdminReq());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(doFaciAdminReq());
+  // }, []);
 
   const [dataFaci, setDataFaci] = useState({
+    faci_id: 0,
     faci_name: "",
     faci_description: "",
     faci_max_number: 0,
@@ -31,22 +31,23 @@ export default function index() {
     faci_rate_price: "",
     faci_discount: "",
     faci_tax_rate: "",
-    faci_modified_date: new Date().toISOString().substr(0, 10),
+    faci_modified_date: "",
     faci_cagro_id: 0,
     faci_hotel_id: 0,
   });
   console.log("datafaci", dataFaci);
   const [faci, setFaci] = useState();
-  console.log("faci", faci);
   useEffect(() => {
-    const faciOne = faci_hotel_id?.find((item: any) => item.faci_id == id);
+    dispatch(doFaciAdminReq());
+    let faciOne = faci_hotel_id.find((item: any) => item.faci_id == id);
     setFaci(faciOne);
-  });
+  }, [id]);
+
   useEffect(() => {
     if (faci) {
       setDataFaci(faci);
     }
-  }, [faci]);
+  }, [faci, id]);
   const handlerMunit = (value: any) => {
     setDataFaci({ ...dataFaci, faci_measure_unit: value });
   };
@@ -87,7 +88,7 @@ export default function index() {
     faci_tax_rate: "",
     faci_cagro_id: "",
   });
-  const updateData = (e: any) => {
+  const updateFaci = (e: any) => {
     e.preventDefault();
     if (dataFaci.faci_name === "") {
       setShowError({ ...showError, faci_name: true });
@@ -169,33 +170,34 @@ export default function index() {
       });
       return;
     }
+    dispatch(doUpdateFaci(dataFaci));
+    router.push("/hotelAdmin/facility/" + dataFaci.faci_hotel_id);
+  };
 
-    // dispatch(());
+  // buton back
+  const back = (id: any) => {
+    router.push("/hotelAdmin/facility/" + id);
   };
 
   // use effect membuat faci discount
   // diskon
-  const [disc, setDisc] = useState(0);
-  function handlerDisc(event: any) {
-    setDisc(event.target.value);
-  }
-  // end
-  let hightPrice = dataFaci.faci_rate_price;
-  let IntHp = parseInt(hightPrice);
-  useEffect(() => {
-    let totDiscount = IntHp * (disc / 100);
-    let hasilDiscount = totDiscount.toString();
-    setDataFaci({ ...dataFaci, faci_discount: hasilDiscount });
-  }, [dataFaci.faci_rate_price, disc]);
-
-  // buuton back
-  const back = (id: any) => {
-    router.push("/hotelAdmin/facility/" + id);
-  };
+  // const [disc, setDisc] = useState(0);
+  // function handlerDisc(event: any) {
+  //   setDisc(event.target.value);
+  // }
+  // // end
+  // let hightPrice = dataFaci.faci_rate_price;
+  // let IntHp = parseInt(hightPrice);
+  // useEffect(() => {
+  //   let totDiscount = IntHp * (disc / 100);
+  //   let hasilDiscount = totDiscount.toString();
+  //   setDataFaci({ ...dataFaci, faci_discount: hasilDiscount });
+  // }, [dataFaci.faci_rate_price, disc]);
+  //
   return (
     <div className="w-3/4 mx-auto text-center mt-5 mb-5">
       <div className="text-2xl flex justify-start mt-5 mb-5">
-        <span>Edit data Hotel</span>
+        <span>Edit data Facility</span>
       </div>
       {/* form */}
       <Form layout="vertical" className="bg-white p-6 rounded-lg">
@@ -204,15 +206,12 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_name"
-              name="faci_name"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_name === "" && showError.faci_name ? "error" : ""
               }
               help={dataFaci.faci_name === "" ? messageError.faci_name : null}
             >
               <Input
-                placeholder={dataFaci.faci_name}
                 value={dataFaci.faci_name}
                 onChange={eventHandler("faci_name")}
               />
@@ -221,8 +220,6 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_max_number"
-              name="faci_max_number"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_max_number === 0 && showError.faci_max_number
                   ? "error"
@@ -237,7 +234,6 @@ export default function index() {
               <Input
                 type="number"
                 min={0}
-                placeholder={dataFaci.faci_max_number.toString()}
                 value={dataFaci.faci_max_number}
                 onChange={eventHandler("faci_max_number")}
               />
@@ -245,8 +241,6 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_measure_unit"
-              name="faci_measure_unit"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_measure_unit === "" && showError.faci_measure_unit
                   ? "error"
@@ -266,7 +260,7 @@ export default function index() {
                 <Select.Option value="beds">beds</Select.Option>
               </Select>
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
               className=""
               label="faci_cagro_id"
               name="faci_cagro_id"
@@ -288,8 +282,8 @@ export default function index() {
                 readOnly
                 className="bg-gray-100 font-bold text-gray-500"
               />
-            </Form.Item>
-            <Form.Item className="" label="faci_room_number">
+            </Form.Item> */}
+            {/* <Form.Item className="" label="faci_room_number">
               <Input
                 placeholder={dataFaci.faci_room_number}
                 type="text"
@@ -298,11 +292,9 @@ export default function index() {
                 readOnly
                 className="bg-gray-100 font-bold text-gray-500"
               />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               label="faci_startdate"
-              name="faci_startdate"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_startdate === "" && showError.faci_startdate
                   ? "error"
@@ -315,7 +307,6 @@ export default function index() {
               }
             >
               <Input
-                placeholder={dataFaci.faci_startdate}
                 type="date"
                 value={dataFaci.faci_startdate}
                 onChange={eventHandler("faci_startdate")}
@@ -324,8 +315,6 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_description"
-              name="faci_description"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_description === "" && showError.faci_description
                   ? "error"
@@ -338,7 +327,6 @@ export default function index() {
               }
             >
               <TextArea
-                placeholder={dataFaci.faci_description}
                 value={dataFaci.faci_description}
                 onChange={eventHandler("faci_description")}
               />
@@ -348,8 +336,6 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_endate"
-              name="faci_endate"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_endate === "" && showError.faci_endate
                   ? "error"
@@ -360,7 +346,6 @@ export default function index() {
               }
             >
               <Input
-                placeholder={dataFaci.faci_endate}
                 type="date"
                 value={dataFaci.faci_endate}
                 onChange={eventHandler("faci_endate")}
@@ -369,8 +354,6 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_hight_price"
-              name="faci_hight_price"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_hight_price === "" && showError.faci_hight_price
                   ? "error"
@@ -383,8 +366,7 @@ export default function index() {
               }
             >
               <Input
-                placeholder={dataFaci.faci_hight_price}
-                type="number"
+                type="text"
                 value={dataFaci.faci_hight_price}
                 onChange={eventHandler("faci_hight_price")}
                 suffix="$"
@@ -394,8 +376,6 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_low_price"
-              name="faci_low_price"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_low_price === "" && showError.faci_low_price
                   ? "error"
@@ -408,8 +388,7 @@ export default function index() {
               }
             >
               <Input
-                placeholder={dataFaci.faci_low_price}
-                type="number"
+                type="text"
                 value={dataFaci.faci_low_price}
                 onChange={eventHandler("faci_low_price")}
                 suffix="$"
@@ -419,8 +398,6 @@ export default function index() {
             <Form.Item
               className=""
               label="faci_rate_price"
-              name="faci_rate_price"
-              rules={[{ required: true }]}
               validateStatus={
                 dataFaci.faci_rate_price === "" && showError.faci_rate_price
                   ? "error"
@@ -433,15 +410,14 @@ export default function index() {
               }
             >
               <Input
-                placeholder={dataFaci.faci_rate_price}
-                type="number"
+                type="text"
                 value={dataFaci.faci_rate_price}
                 onChange={eventHandler("faci_rate_price")}
                 suffix="$"
                 min={0}
               />
             </Form.Item>
-            <Form.Item className="" label="discount">
+            {/* <Form.Item className="" label="discount">
               <Input
                 type="number"
                 value={disc}
@@ -451,8 +427,8 @@ export default function index() {
                 min={0}
                 max={100}
               />
-            </Form.Item>
-            <Form.Item className="" label="faci_discount">
+            </Form.Item> */}
+            {/* <Form.Item className="" label="faci_discount">
               <Input
                 placeholder={dataFaci.faci_discount}
                 type="text"
@@ -462,39 +438,37 @@ export default function index() {
                 className="bg-gray-100 font-bold text-gray-500"
                 suffix="$"
               />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item className="" label="faci_tax_rate">
               <Input
-                placeholder={dataFaci.faci_tax_rate}
-                type="number"
+                type="text"
                 value={dataFaci.faci_tax_rate}
                 onChange={eventHandler("faci_tax_rate")}
                 suffix="$"
                 min={0}
               />
             </Form.Item>
-
-            <Form.Item className="">
-              <Form.Item className="faci_hotel_id" label="faciHotelId">
+            {/* <Form.Item className="faci_hotel_id" label="faciHotelId">
                 <Input
                   value={dataFaci.faci_hotel_id}
                   onChange={eventHandler("faci_hotel_id")}
                   readOnly
                   className="text-base text-gray-500 font-bold bg-gray-100"
                 />
-              </Form.Item>
+              </Form.Item> */}
+
+            {/*               
               <Input
                 type="date"
                 value={dataFaci.faci_modified_date}
                 onChange={eventHandler("faci_modified_date")}
                 readOnly
-              />
-            </Form.Item>
+              /> */}
           </Col>
         </Row>
         <Row className="flex justify-between px-16">
           <Form.Item className="items-center">
-            <Button type="primary" className="bg-red-500" onClick={updateData}>
+            <Button type="primary" className="bg-red-500" onClick={updateFaci}>
               Submit
             </Button>
           </Form.Item>

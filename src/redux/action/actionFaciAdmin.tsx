@@ -60,3 +60,22 @@ export const doDelFaciFailed = (payload: any) => {
     payload,
   };
 };
+// update
+export const doUpdateFaci = (payload: any) => {
+  return {
+    type: ActionTypes.UPDATE_FACI,
+    payload,
+  };
+};
+export const doUpdateFaciSucces = (payload: any) => {
+  return {
+    type: ActionTypes.UPDATE_FACI_SUCCED,
+    payload,
+  };
+};
+export const doUpdateFaciFailed = (payload: any) => {
+  return {
+    type: ActionTypes.UPDATE_FACI_FAILED,
+    payload,
+  };
+};

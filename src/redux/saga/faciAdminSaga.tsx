@@ -7,6 +7,8 @@ import {
   doInsertFaciSucced,
   doDelFaciSucced,
   doDelFaciFailed,
+  doUpdateFaciSucces,
+  doUpdateFaciFailed,
 } from "../action/actionFaciAdmin";
 import {
   doMaxRoomIdReqFailed,
@@ -49,9 +51,20 @@ function* handlerDeleteFaci(action: any) {
   }
 }
 
+// update
+function* handlerUpdateFaci(action: any) {
+  try {
+    yield call(ApiHotel.updateFaci, action.payload);
+    yield put(doUpdateFaciSucces(action.payload));
+  } catch (err) {
+    yield put(doUpdateFaciFailed(err));
+  }
+}
+
 export {
   handlerGetFaciAdmin,
   handlerGetMaxIdRoom,
   handlerInsertFaciAdmin,
   handlerDeleteFaci,
+  handlerUpdateFaci,
 };

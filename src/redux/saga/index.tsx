@@ -14,6 +14,7 @@ import {
   handlerGetFaciAdmin,
   handlerGetMaxIdRoom,
   handlerInsertFaciAdmin,
+  handlerUpdateFaci,
 } from "./faciAdminSaga";
 import { handlerHore } from "./horeSaga";
 import { handlerFapho } from "./faphoAdminSaga";
@@ -35,6 +36,7 @@ function* watchAll() {
     takeEvery(ActionTypes.DEL_FACI, handlerDeleteFaci),
     takeEvery(ActionTypes.GET_FAPHO, handlerFapho),
     takeEvery(ActionTypes.GET_FACIPRICEHISTORY, handlerFPH),
+    takeEvery(ActionTypes.UPDATE_FACI, handlerUpdateFaci),
   ]);
 }
 

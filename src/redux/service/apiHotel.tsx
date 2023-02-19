@@ -98,6 +98,16 @@ const insertFaci = async (data: any) => {
   }
 };
 
+// UPDATE FACI
+const updateFaci = async (data: any) => {
+  try {
+    const result = await axios.put(`/facility/${data.faci_id}`, data);
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
 // GET SEARCHH ADDR
 const getAddrSearch = async () => {
   try {
@@ -151,6 +161,7 @@ const ApiHotel = {
   removeFaci,
   getFaphoAdmin,
   getFaciPricehistory,
+  updateFaci,
 };
 
 export default ApiHotel;
