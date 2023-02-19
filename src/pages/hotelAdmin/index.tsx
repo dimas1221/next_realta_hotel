@@ -6,7 +6,7 @@ import {
   doInsertHotel,
 } from "@/redux/action/actionHotelAdmin";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Button, Form, Input, Modal, Table } from "antd";
+import { Alert, Button, Form, Input, Modal, Rate, Table } from "antd";
 import { useRouter } from "next/router";
 import {
   DeleteOutlined,
@@ -19,6 +19,7 @@ import {
 } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
 import { FaHotel } from "react-icons/fa";
+import dayjs from "dayjs";
 
 export default function index() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ export default function index() {
 
   // modal delete
   const { confirm } = Modal;
-  const showDeleteConfirm = (id: any) => {
+  const showDeleteConfirm = (idHotel: any) => {
     confirm({
       title: "Are you sure delete this task?",
       icon: <ExclamationCircleFilled />,
@@ -44,7 +45,7 @@ export default function index() {
       okType: "danger",
       cancelText: "No",
       onOk() {
-        dispatch(doDelHotel(id));
+        dispatch(doDelHotel(idHotel));
       },
       onCancel() {
         console.log("calcle");
@@ -95,11 +96,23 @@ export default function index() {
       dataIndex: "hotelDescription",
       key: "hotelDescription",
     },
+    // {
+    //   title: "Rating",
+    //   dataIndex: "hotelRatingStar",
+    //   key: "hotelRatingStar",
+    // sorter: (a: any, b: any) => a.hotelRatingStar - b.hotelRatingStar,
+    // },
     {
       title: "Rating",
-      dataIndex: "hotelRatingStar",
-      key: "hotelRatingStar",
-      sorter: (a: any, b: any) => a.hotelRatingStar - b.hotelRatingStar,
+      key: "index",
+      render: (text: any, record: any, index) => (
+        <Rate
+          disabled
+          defaultValue={record.hotelRatingStar}
+          className="text-sm"
+        />
+      ),
+      className: "w-36",
     },
     {
       title: "hotelPhonenumber",
@@ -107,19 +120,23 @@ export default function index() {
       key: "hotelPhonenumber",
     },
     {
-      title: "hotelModifiedDate",
-      dataIndex: "hotelModifiedDate",
-      key: "hotelModifiedDate",
+      title: "modified date",
+      key: "index",
+      render: (text: any, record: any, index) => (
+        <p>{dayjs(record.hotelModifiedDate).format("DD MMMM YYYY hh:mm:ss")}</p>
+      ),
+      className: "w-36",
     },
     {
       title: (
         <>
           <Button
-            className="mt-5 px-4 py-1 bg-green-500 mb-5 w-16"
+            className="mt-5 px-3 py-1 bg-green-500 mb-5 flex text-white items-center"
             type="primary"
             onClick={() => setModal2Open(true)}
           >
-            <PlusOutlined className="text-white" />
+            <PlusOutlined className="text-base" />
+            <p>add</p>
           </Button>
         </>
       ),
@@ -307,7 +324,7 @@ export default function index() {
               onChange={handleSearchHotel}
               className="w-full"
               suffix={
-                <SearchOutlined className="text-2xl text-blue-500 mb-2" />
+                <SearchOutlined className="text-2xl text-blue-500 mb-1" />
               }
             />
           </Form.Item>
@@ -372,7 +389,7 @@ export default function index() {
                 <option value="">-pilih address-</option>
               </select>
             </Form.Item>
-            <Form.Item label="hotelRatingStar">
+            {/* <Form.Item label="hotelRatingStar">
               <Input
                 placeholder=""
                 type="number"
@@ -382,7 +399,7 @@ export default function index() {
                 onChange={eventHandler("hotelRatingStar")}
                 className="w-1/4"
               />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               label="hotelPhonenumber"
               name="hotelPhonenumber"

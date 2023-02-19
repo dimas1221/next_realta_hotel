@@ -91,8 +91,10 @@ export default function Faci() {
     },
     {
       title: "Deskripsi",
-      dataIndex: "faci_description",
-      key: "faci_description",
+      key: "index",
+      render: (text: any, record: any, index) => (
+        <p className="w-32 text-xs">{record.faci_description}</p>
+      ),
     },
     {
       title: "faciMax",
@@ -112,13 +114,21 @@ export default function Faci() {
     },
     {
       title: "faci_startdate",
-      dataIndex: "faci_startdate",
-      key: "faci_startdate",
+      key: "index",
+      render: (text: any, record: any, index) => (
+        <p className="w-32 text-xs">
+          {dayjs(record.faci_startdate).format("DD MMMM YYYY hh:mm:ss")}
+        </p>
+      ),
     },
     {
       title: "faci_endate",
-      dataIndex: "faci_endate",
-      key: "faci_endate",
+      key: "index",
+      render: (text: any, record: any, index) => (
+        <p className="w-32 text-xs">
+          {dayjs(record.faci_endate).format("DD MMMM YYYY hh:mm:ss")}
+        </p>
+      ),
     },
     {
       title: "faci_low_price",
@@ -147,8 +157,12 @@ export default function Faci() {
     },
     {
       title: "faci_modified_date",
-      dataIndex: "faci_modified_date",
-      key: "faci_modified_date",
+      key: "index",
+      render: (text: any, record: any, index) => (
+        <p className="w-32 text-xs">
+          {dayjs(record.faci_modified_date).format("DD MMMM YYYY hh:mm:ss")}
+        </p>
+      ),
     },
     {
       title: "faci_cagro_id",
@@ -164,11 +178,12 @@ export default function Faci() {
       title: (
         <>
           <Button
-            className="mt-5 px-4 py-1 bg-green-500 mb-5 w-16"
+            className="mt-5 px-3 py-1 bg-green-500 mb-5 flex text-white items-center"
             type="primary"
             onClick={() => setModal2Open(true)}
           >
-            <PlusOutlined className="text-white" />
+            <PlusOutlined className="text-base" />
+            <p>add</p>
           </Button>
         </>
       ),
@@ -501,11 +516,11 @@ export default function Faci() {
       />
       <div className="flex justify-between mt-2">
         <div className="flex justify-start">
-          <span className="text-4xl font-bold">
+          <span className="text-3xl font-bold">
             <IoIosBed />
           </span>
           <div>
-            <span className="text-4xl font-bold ml-3">
+            <span className="text-3xl font-bold ml-3">
               {dataHotelOne?.hotelName}
             </span>
           </div>
@@ -521,7 +536,7 @@ export default function Faci() {
           </p>
         </div>
       </div>
-      <p className="flex justify-start text-base text-gray-400 font-bold">
+      <p className="flex justify-start text-sm text-gray-400 font-bold">
         {dataAddrById?.place}
       </p>
       <hr className="text-gray-600 font-bold py-4" />
