@@ -1,5 +1,6 @@
+import { doFaciAdminReq } from "@/redux/action/actionFaciAdmin";
 import { doGetFapho } from "@/redux/action/actionFaphoAdmin";
-import { InboxOutlined } from "@ant-design/icons";
+import { InboxOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Col,
@@ -10,11 +11,26 @@ import {
   Select,
   Table,
   Upload,
+  Image,
 } from "antd";
 import { ColumnType } from "antd/es/table";
+import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AiFillPicture } from "react-icons/ai";
+import { ImUpload2 } from "react-icons/im";
+
+import type { RcFile, UploadProps } from "antd/es/upload";
+import type { UploadFile } from "antd/es/upload/interface";
+
+const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
 
 export default function Fapho() {
   const router = useRouter();
@@ -24,8 +40,15 @@ export default function Fapho() {
   const faphoHotel = useSelector((state: any) => state.FaphoReducer.fapho);
   const faphoOne = faphoHotel.filter((item: any) => item.fapho_faci_id == id);
 
+  // reducer faci
+  const faciHotel = useSelector(
+    (state: any) => state.FaciAdminReducer.faciAdmin
+  );
+  const faciOne = faciHotel?.find((item: any) => item.faci_hotel_id == id);
+
   useEffect(() => {
     dispatch(doGetFapho());
+    dispatch(doFaciAdminReq());
   }, []);
   const columns: ColumnType<any>[] = [
     {
@@ -38,6 +61,17 @@ export default function Fapho() {
       title: "fapho_faci_id",
       dataIndex: "fapho_faci_id",
       key: "fapho_faci_id",
+    },
+    {
+      title: "photo",
+      key: "gambar",
+      render: (text: any, record: any) => (
+        <Image
+          src={record?.fapho_url.slice(1)}
+          alt={record?.fapho_url}
+          className="w-1/4"
+        />
+      ),
     },
     {
       title: "fapho_thumbnail_filename",
@@ -61,8 +95,12 @@ export default function Fapho() {
     },
     {
       title: "fapho_modifield_date",
-      dataIndex: "fapho_modifield_date",
       key: "fapho_modifield_date",
+      render: (text: any, record: any, index) => (
+        <p className="w-32 text-xs">
+          {dayjs(record.fapho_modifield_date).format("DD MMMM YYYY hh:mm:ss")}
+        </p>
+      ),
     },
   ];
   // modalinsert
@@ -78,18 +116,62 @@ export default function Fapho() {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
+  // upload image
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  console.log("fielist", fileList);
 
+  const handleCancel = () => setPreviewOpen(false);
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
+    );
+  };
+
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    setFileList(newFileList);
+
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+  // end
   return (
     <div className="w-3/4 mx-auto text-center">
+      <div className="flex justify-between py-3">
+        <div className="flex justify-start space-x-3">
+          <AiFillPicture className="text-2xl" />
+          <span className="text-2xl font bold">{faciOne?.faci_name}</span>
+        </div>
+        <span>
+          {dayjs(faciOne?.faci_modified_date).format("DD MMMM YYYY hh:mm:ss")}
+        </span>
+      </div>
+      <hr className="text-gray-600 font-bold py-4" />
+      <span className="text-base text-gray-300 flex justify-start">
+        facility photo :
+      </span>
       <div className="flex justify-end">
         {/* modal add data */}
         <>
           <Button
-            className="bg-red-500 mb-5 w-32"
+            className="bg-red-500 mb-5 flex justify-center px-3 py-2 items-center"
             type="primary"
             onClick={() => setModal2Open(true)}
           >
-            Add
+            <ImUpload2 />
+            <p>upload</p>
           </Button>
           <Modal
             title="Upload Photo"
@@ -99,33 +181,29 @@ export default function Fapho() {
             onCancel={() => setModal2Open(false)}
             footer={null}
           >
-            <Form>
-              <Form.Item label="Dragger">
-                <Form.Item
-                  name="dragger"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                  noStyle
-                >
-                  <Upload.Dragger name="files" action="/upload.do">
-                    <p className="ant-upload-drag-icon">
-                      <InboxOutlined />
-                    </p>
-                    <p className="ant-upload-text">
-                      Click or drag file to this area to upload
-                    </p>
-                    <p className="ant-upload-hint">
-                      Support for a single or bulk upload.
-                    </p>
-                  </Upload.Dragger>
-                </Form.Item>
-              </Form.Item>
-              <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                <Button type="primary" htmlType="submit" className="bg-red-500">
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
+            <>
+              <Upload
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                listType="picture-card"
+                fileList={fileList}
+                onPreview={handlePreview}
+                onChange={handleChange}
+              >
+                {fileList.length >= 8 ? null : uploadButton}
+              </Upload>
+              <Modal
+                open={previewOpen}
+                title={previewTitle}
+                footer={null}
+                onCancel={handleCancel}
+              >
+                <img
+                  alt="example"
+                  style={{ width: "100%" }}
+                  src={previewImage}
+                />
+              </Modal>
+            </>
           </Modal>
         </>
         {/* end */}
