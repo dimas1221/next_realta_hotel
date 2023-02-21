@@ -1,6 +1,11 @@
 import { call, put } from "@redux-saga/core/effects";
 import ApiHotel from "../service/apiHotel";
-import { doGetFaphoSucced, doGetFaphoFaied } from "../action/actionFaphoAdmin";
+import {
+  doGetFaphoSucced,
+  doGetFaphoFaied,
+  doUploadFaphoSucced,
+  doUploadFaphoFailed,
+} from "../action/actionFaphoAdmin";
 
 function* handlerFapho(): any {
   try {
@@ -11,4 +16,14 @@ function* handlerFapho(): any {
   }
 }
 
-export { handlerFapho };
+// insert
+function* handlerUploadFapho(action: any): any {
+  try {
+    yield call(ApiHotel.uploadFapho, action.payload);
+    yield put(doUploadFaphoSucced(action.payload));
+  } catch (error) {
+    yield put(doUploadFaphoFailed(error));
+  }
+}
+
+export { handlerFapho, handlerUploadFapho };

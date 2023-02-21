@@ -17,7 +17,7 @@ import {
   handlerUpdateFaci,
 } from "./faciAdminSaga";
 import { handlerHore } from "./horeSaga";
-import { handlerFapho } from "./faphoAdminSaga";
+import { handlerFapho, handlerUploadFapho } from "./faphoAdminSaga";
 import { handlerFPH } from "./fphSaga";
 
 function* watchAll() {
@@ -37,6 +37,7 @@ function* watchAll() {
     takeEvery(ActionTypes.GET_FAPHO, handlerFapho),
     takeEvery(ActionTypes.GET_FACIPRICEHISTORY, handlerFPH),
     takeEvery(ActionTypes.UPDATE_FACI, handlerUpdateFaci),
+    takeEvery(ActionTypes.UPLOAD_FAPHO, handlerUploadFapho),
   ]);
 }
 

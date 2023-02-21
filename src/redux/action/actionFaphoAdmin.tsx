@@ -19,3 +19,22 @@ export const doGetFaphoFaied = (payload: any) => {
     payload,
   };
 };
+// UPLOAD
+export const doUploadFapho = (payload: any) => {
+  return {
+    type: ActionTypes.UPLOAD_FAPHO,
+    payload,
+  };
+};
+export const doUploadFaphoSucced = (payload: any) => {
+  return {
+    type: ActionTypes.UPLOAD_FAPHO_SUCCED,
+    payload,
+  };
+};
+export const doUploadFaphoFailed = (payload: any) => {
+  return {
+    type: ActionTypes.UPLOAD_FAPHO_FAILED,
+    payload,
+  };
+};

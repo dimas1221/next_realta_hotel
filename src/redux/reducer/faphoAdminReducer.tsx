@@ -16,6 +16,13 @@ function FaphoReducer(state = initialState, action: any) {
       return { ...state, fapho: action.payload };
     case ActionTypes.GET_FAPHO_FAILED:
       return { ...state, fapho: action.payload };
+    // insert
+    case ActionTypes.UPLOAD_FAPHO:
+      return { ...state };
+    case ActionTypes.UPLOAD_FAPHO_SUCCED:
+      return { ...state, fapho: [...state.fapho, action.payload] };
+    case ActionTypes.UPLOAD_FAPHO_FAILED:
+      return { ...state, fapho: [...state.fapho, action.payload] };
     default:
       return { ...state };
   }

@@ -146,6 +146,16 @@ const getFaciPricehistory = async () => {
   }
 };
 
+// insert fapho
+const uploadFapho = async (data: any) => {
+  try {
+    const result = await axios.post("/facility-photos/upload", data);
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 const ApiHotel = {
   getCardHotel,
   getFaciAllHotel,
@@ -162,6 +172,7 @@ const ApiHotel = {
   getFaphoAdmin,
   getFaciPricehistory,
   updateFaci,
+  uploadFapho,
 };
 
 export default ApiHotel;
