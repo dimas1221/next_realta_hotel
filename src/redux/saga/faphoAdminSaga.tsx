@@ -25,5 +25,14 @@ function* handlerUploadFapho(action: any): any {
     yield put(doUploadFaphoFailed(error));
   }
 }
+// function* handlerUploadFapho(action: any) {
+//   try {
+//     const { file, faphoFaci } = action.payload;
+//     yield call(ApiHotel.uploadFapho, file, faphoFaci);
+//     yield put(doUploadFaphoSucced(action.payload));
+//   } catch (error) {
+//     yield put(doUploadFaphoFailed(error));
+//   }
+// }
 
 export { handlerFapho, handlerUploadFapho };

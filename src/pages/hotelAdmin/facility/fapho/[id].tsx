@@ -24,22 +24,17 @@ import { ImUpload2 } from "react-icons/im";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 
-// const getBase64 = (file: RcFile): Promise<string> =>
-//   new Promise((resolve, reject) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => resolve(reader.result as string);
-//     reader.onerror = (error) => reject(error);
-//   });
-
 export default function Fapho() {
   const router = useRouter();
   const { id } = router.query;
+
+  console.log("id", id);
   const dispatch = useDispatch();
 
   const faphoHotel = useSelector((state: any) => state.FaphoReducer.fapho);
   const faphoOne = faphoHotel.filter((item: any) => item.fapho_faci_id == id);
-
+  const faphoByOne = faphoHotel?.find((item: any) => item.fapho_faci_id == id);
+  console.log("faphoByone", faphoByOne?.fapho_faci_id);
   // reducer faci
   const faciHotel = useSelector(
     (state: any) => state.FaciAdminReducer.faciAdmin
@@ -62,17 +57,17 @@ export default function Fapho() {
       dataIndex: "fapho_faci_id",
       key: "fapho_faci_id",
     },
-    {
-      title: "photo",
-      key: "gambar",
-      render: (text: any, record: any) => (
-        <Image
-          src={record?.fapho_url.slice(1)}
-          alt={record?.fapho_url}
-          className="w-1/4"
-        />
-      ),
-    },
+    // {
+    //   title: "photo",
+    //   key: "gambar",
+    //   render: (text: any, record: any) => (
+    //     <Image
+    //       src={record?.fapho_url.slice(1)}
+    //       alt={record?.fapho_url}
+    //       className="w-1/4"
+    //     />
+    //   ),
+    // },
     {
       title: "fapho_thumbnail_filename",
       dataIndex: "fapho_thumbnail_filename",
@@ -106,46 +101,19 @@ export default function Fapho() {
   // modalinsert
   const [modal2Open, setModal2Open] = useState(false);
 
-  // // upload image
-  // const [previewOpen, setPreviewOpen] = useState(false);
-  // const [previewImage, setPreviewImage] = useState("");
-  // const [previewTitle, setPreviewTitle] = useState("");
-  // const [fileList, setFileList] = useState<UploadFile[]>([]);
-  // console.log("fielist", fileList);
-
-  // const handleCancel = () => setPreviewOpen(false);
-
-  // const handlePreview = async (file: UploadFile) => {
-  //   if (!file.url && !file.preview) {
-  //     file.preview = await getBase64(file.originFileObj as RcFile);
-  //   }
-
-  //   setPreviewImage(file.url || (file.preview as string));
-  //   setPreviewOpen(true);
-  //   setPreviewTitle(
-  //     file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
-  //   );
-  // };
-
-  // const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
-  //   setFileList(newFileList);
-
-  // const uploadButton = (
-  //   <div>
-  //     <PlusOutlined />
-  //     <div style={{ marginTop: 8 }}>Upload</div>
-  //   </div>
-  // );
-  // end
-
   const [dataUp, setDataUp] = useState(new FormData());
   console.log("data up", dataUp);
   const onUploadLogo = (e: any) => {
+    var idFaci = faphoByOne?.fapho_faci_id;
     var img = e.target.files[0];
     let formData = new FormData();
     formData.append("file", img);
+    formData.append("faphoFaci", idFaci);
     console.log("image check => ", img);
+    console.log("id check => ", idFaci);
     console.log("formData check => ", formData);
+    console.log("formData:", Object.fromEntries(formData.entries()));
+
     // dispatch(doUploadFapho(formData));
     setDataUp(formData);
   };
@@ -155,6 +123,8 @@ export default function Fapho() {
     dispatch(doUploadFapho(dataUp));
     setModal2Open(false);
   };
+
+  // upload foto
 
   return (
     <div className="w-3/4 mx-auto text-center">
@@ -190,13 +160,14 @@ export default function Fapho() {
             onCancel={() => setModal2Open(false)}
             footer={null}
           >
-            <label className="custom-file-upload">
-              <input type="file" onChange={onUploadLogo} accept="image/*" />
-              Attach
-            </label>
-            <Button type="primary" className="bg-red-500" onClick={addData}>
-              Save
-            </Button>
+            <form action="" encType="multipart/form-data" method="POST">
+              <label className="custom-file-upload">
+                <input type="file" onChange={onUploadLogo} accept="image/*" />
+              </label>
+              <Button type="primary" className="bg-red-500" onClick={addData}>
+                Save
+              </Button>
+            </form>
           </Modal>
         </>
         {/* end */}

@@ -156,6 +156,18 @@ const uploadFapho = async (data: any) => {
   }
 };
 
+// const uploadFapho = async (file: File, faphoFaci: any) => {
+//   try {
+//     const formData = new FormData();
+//     formData.append("file", file);
+//     formData.append("faphoFaci", faphoFaci);
+//     const result = await axios.post("/facility-photos/upload", file, faphoFaci);
+//     return result;
+//   } catch (error) {
+//     return error;
+//   }
+// };
+
 const ApiHotel = {
   getCardHotel,
   getFaciAllHotel,
